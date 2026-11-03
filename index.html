@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ouro Paulista — Ouro de São Paulo para o seu bem</title>
+<meta name="description" content="Ouro Paulista: marca de ouro físico de São Paulo. Barras vendidas, faturadas e custodiadas por instituição autorizada pelo Banco Central.">
+<link rel="canonical" href="https://ouropaulista.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ouro Paulista">
+<meta property="og:description" content="Ouro de São Paulo para o seu bem. Ouro físico com nota e custódia por instituição autorizada pelo Banco Central.">
+<meta property="og:url" content="https://ouropaulista.com/">
+<meta property="og:image" content="https://ouropaulista.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<link rel="apple-touch-icon" href="/favicon_180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: folha de certificado — texto à esquerda, gravura do brasão à direita, réguas finas como num laudo de ensaio */
+:root{
+  --paper:#FFFFFF;
+  --ink:#111111;
+  --ink-2:#4A4A47;
+  --rule:#D9DADC;
+  --silver:#B8BDC2;
+  --gold:#D4A017;
+  --gold-ink:#8A6A0C;
+  --panel:#F5F5F3;
+  --f-display:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --emblem-filter:none;
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111111; --ink:#EEECE7; --ink-2:#B3B1AB; --rule:#2E2F31; --silver:#6E7378;
+    --gold:#D4A017; --gold-ink:#E2B53A; --panel:#1A1A1A; --emblem-filter:invert(1); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111111; --ink:#EEECE7; --ink-2:#B3B1AB; --rule:#2E2F31; --silver:#6E7378;
+  --gold:#D4A017; --gold-ink:#E2B53A; --panel:#1A1A1A; --emblem-filter:invert(1); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{color-scheme:light}
+@media (prefers-color-scheme: dark){html{color-scheme:dark}}
+body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:-0.02em;line-height:1.05;text-wrap:balance;margin:0}
+p{margin:0;max-width:62ch}
+.label{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+
+/* topo */
+header.top{border-bottom:1px solid var(--rule)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+.lockup{height:44px;width:auto;filter:var(--emblem-filter)}
+nav{display:flex;gap:24px;font-family:var(--f-display);font-weight:500;font-size:15px}
+nav a{text-decoration:none;color:var(--ink-2);transition:color 150ms ease}
+@media (hover:hover) and (pointer:fine){nav a:hover{color:var(--ink)}}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:56px;align-items:center;padding-block:72px 64px}
+.hero h1{font-size:clamp(40px,6.2vw,76px)}
+.hero h1 em{font-style:normal;color:var(--gold-ink)}
+.hero .lede{margin-top:24px;font-size:20px;color:var(--ink-2)}
+.hero .assay{margin-top:32px;display:flex;flex-wrap:wrap;gap:8px 28px;padding-top:18px;border-top:1px solid var(--rule)}
+.hero .assay span{font-family:var(--f-mono);font-size:13px;color:var(--ink-2)}
+.hero .assay b{font-weight:500;color:var(--ink)}
+.plate{position:relative;justify-self:center;width:100%;max-width:340px}
+.plate img{display:block;width:100%;height:auto;filter:var(--emblem-filter)}
+.plate::after{content:"";position:absolute;left:12%;right:12%;bottom:-18px;height:2px;background:var(--gold)}
+
+/* seções */
+section{border-top:1px solid var(--rule)}
+section .wrap{padding-block:64px}
+.sec-head{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;align-items:baseline;margin-bottom:36px}
+.sec-head h2{font-size:clamp(28px,3.4vw,40px)}
+
+/* passos */
+ol.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+ol.steps li{padding:20px 20px 0 0;display:flex;flex-direction:column;gap:10px;min-width:0}
+ol.steps li+li{padding-left:20px;border-left:1px solid var(--rule)}
+ol.steps .n{font-family:var(--f-mono);font-size:13px;color:var(--gold-ink)}
+ol.steps h3{font-size:20px;letter-spacing:-0.01em}
+ol.steps p{font-size:16px;color:var(--ink-2)}
+
+/* quem faz o quê */
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.col{background:var(--panel);padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.col h3{font-size:22px}
+.col ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.col li{padding-left:22px;position:relative;font-size:17px}
+.col li::before{content:"";position:absolute;left:0;top:.7em;width:10px;height:1px;background:var(--ink)}
+.col.no li::before{background:var(--silver)}
+.note{margin-top:20px;font-size:15px;color:var(--ink-2)}
+
+/* 1932 */
+.history .wrap{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.history blockquote{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(24px,2.8vw,32px);line-height:1.2;letter-spacing:-0.015em;max-width:30ch;text-wrap:balance}
+.history p{margin-top:18px;color:var(--ink-2)}
+
+/* parceiros */
+.partners{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.partners div{border-top:1px solid var(--ink);padding-top:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.partners h3{font-size:19px;letter-spacing:-0.01em}
+.partners p{font-size:16px;color:var(--ink-2)}
+
+/* contato */
+.contact .wrap{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}
+.contact dl{margin:0;display:grid;grid-template-columns:max-content minmax(0,1fr);gap:14px 28px;align-items:baseline}
+.contact dt{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.contact dd{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(20px,2.4vw,26px);overflow-wrap:anywhere;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.contact dd a{text-decoration:none;border-bottom:2px solid var(--gold)}
+.copy{font-family:var(--f-mono);font-size:12px;font-weight:400;background:none;border:1px solid var(--rule);color:var(--ink-2);padding:4px 10px;cursor:pointer;border-radius:2px}
+.copy{transition:transform 160ms var(--ease-out),border-color 150ms ease,color 150ms ease}
+.copy:active{transform:scale(0.97)}
+@media (hover:hover) and (pointer:fine){.copy:hover{border-color:var(--ink);color:var(--ink)}}
+.contact dd a{transition:border-color 150ms ease}
+@media (hover:hover) and (pointer:fine){.contact dd a:hover{border-color:var(--ink)}}
+
+footer{border-top:1px solid var(--rule)}
+footer .wrap{padding-block:28px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:14px;color:var(--ink-2)}
+footer .slogan{font-family:var(--f-display);font-weight:700;color:var(--ink)}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:48px;padding-block:48px}
+  .plate{max-width:240px;justify-self:start}
+  .sec-head,.history .wrap,.contact .wrap{grid-template-columns:1fr;gap:12px}
+  ol.steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  ol.steps li:nth-child(3){padding-left:0;border-left:0}
+  ol.steps li{padding-bottom:24px}
+  .split,.partners{grid-template-columns:1fr}
+  nav{display:none}
+}
+@media (max-width:480px){
+  body{font-size:17px}
+  ol.steps{grid-template-columns:1fr}
+  ol.steps li,ol.steps li+li{padding-left:0;border-left:0;border-bottom:1px solid var(--rule)}
+  .lockup{height:36px}
+  .contact dl{grid-template-columns:1fr;gap:4px}
+  .contact dd{margin-bottom:14px}
+}
+@media (prefers-reduced-motion:no-preference){
+    .plate img{animation:rise 700ms var(--ease-out) both}
+  .hero h1,.hero .lede,.hero .assay{animation:rise 600ms var(--ease-out) both}
+  .hero .lede{animation-delay:60ms}
+  .hero .assay{animation-delay:120ms}
+    @keyframes rise{from{opacity:.0001;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <img class="lockup" src="/lockup.png" alt="Ouro Paulista">
+    <nav aria-label="Seções">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#custodia">Custódia</a>
+      <a href="#parceiros">Parceiros</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="label">Ouro físico · São Paulo</p>
+        <h1 style="margin-top:14px">Ouro de São Paulo <em>para o seu bem.</em></h1>
+        <p class="lede">A Ouro Paulista é uma marca de ouro físico para pessoas e empresas que querem guardar parte do patrimônio em barras e medalhas, com nota, certificado e custódia por instituição autorizada pelo Banco Central.</p>
+        <div class="assay" aria-label="Padrão do produto">
+          <span>Pureza <b>999,9</b></span>
+          <span>Documento <b>NF-e Ouro ativo financeiro</b></span>
+          <span>Lei <b>7.766/1989</b></span>
+        </div>
+      </div>
+      <div class="plate">
+        <img src="/emblem.png" alt="Brasão da Ouro Paulista em gravura">
+      </div>
+    </div>
+  </div>
+
+  <section id="como-funciona">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Como funciona</p>
+        <h2>Do primeiro contato à barra registrada em seu nome.</h2>
+      </div>
+      <ol class="steps">
+        <li><span class="n">1</span><h3>Você fala com a gente</h3><p>Tiramos dúvidas sobre pesos, formatos e prazos, sem pressa e sem roteiro de venda.</p></li>
+        <li><span class="n">2</span><h3>Cadastro na instituição</h3><p>A instituição parceira faz o seu cadastro e as verificações exigidas por lei.</p></li>
+        <li><span class="n">3</span><h3>Pagamento direto a ela</h3><p>Você paga à instituição, que emite a nota fiscal de ouro em seu nome.</p></li>
+        <li><span class="n">4</span><h3>Em casa ou no cofre</h3><p>A barra vai até você com transporte segurado, ou fica guardada em cofre em seu nome.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="custodia">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Onde fica o ouro</p>
+        <h2>A marca é nossa. O ouro, a nota e o cofre ficam com quem é autorizado.</h2>
+      </div>
+      <div class="split">
+        <div class="col">
+          <p class="label">Ouro Paulista</p>
+          <h3>Atende e acompanha</h3>
+          <ul>
+            <li>Apresenta os produtos e explica cada etapa.</li>
+            <li>Encaminha o seu pedido à instituição parceira.</li>
+            <li>Acompanha a entrega ou a custódia junto com você.</li>
+          </ul>
+        </div>
+        <div class="col no">
+          <p class="label">Instituição autorizada pelo Banco Central</p>
+          <h3>Vende, fatura e guarda</h3>
+          <ul>
+            <li>Recebe o pagamento e emite a nota fiscal em seu nome.</li>
+            <li>Mantém o ouro em cofre segregado, registrado em seu nome.</li>
+            <li>Garante a recompra nas condições do contrato.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="note">A Ouro Paulista não recebe pagamentos nem guarda ouro de clientes. A instituição parceira está em definição e será informada aqui, com nome e CNPJ, antes do início das vendas.</p>
+    </div>
+  </section>
+
+  <section class="history">
+    <div class="wrap">
+      <p class="label">Origem do nome</p>
+      <div>
+        <blockquote>Em 1932, os paulistas entregaram suas joias na campanha “Ouro para o bem de São Paulo”.</blockquote>
+        <p>O nome e o slogan vêm dali: ouro como reserva e proteção de quem trabalha e constrói em São Paulo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="parceiros">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="label">Para parceiros</p>
+        <h2>Estamos formando a rede que fabrica, vende e guarda o nosso ouro.</h2>
+      </div>
+      <div class="partners">
+        <div><p class="label">DTVMs e bancos</p><h3>Venda e custódia</h3><p>Instituições autorizadas que queiram um canal de originação com marca própria em São Paulo.</p></div>
+        <div><p class="label">Fabricação</p><h3>Barras e medalhas</h3><p>Fabricantes de barras com a marca Ouro Paulista, lacradas, numeradas e com origem do ouro rastreável.</p></div>
+        <div><p class="label">Logística e seguro</p><h3>Cofre e transporte</h3><p>Transportadoras de valores e seguradoras que atendem a instituição parceira.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contato">
+    <div class="wrap">
+      <p class="label">Contato</p>
+      <dl>
+        <dt>E-mail</dt>
+        <dd><span id="mail">contato@ouropaulista.com</span><button class="copy" type="button" data-copy="mail" id="copy-mail">Copiar</button></dd>
+        <dt>Instagram</dt>
+        <dd><a href="https://www.instagram.com/ouro.paulista/" target="_blank" rel="noopener">@ouro.paulista</a></dd>
+        <dt>Cidade</dt>
+        <dd>São Paulo, SP</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="slogan">Ouro de São Paulo para o seu bem.</span>
+    <span>Ouro Paulista · Este site é informativo e não faz oferta de venda. · <a href="/privacidade.html">Privacidade</a></span>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.copy').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var el=document.getElementById(btn.dataset.copy); var t=el.textContent;
+    var done=function(){btn.textContent='Copiado';setTimeout(function(){btn.textContent='Copiar'},1600)};
+    var fallback=function(){var r=document.createRange();r.selectNodeContents(el);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selecionado'};
+    try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}
+  });
+});
+</script>
+
+</body>
+</html>
