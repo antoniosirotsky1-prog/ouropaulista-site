@@ -25,6 +25,15 @@ A coluna `entrega` traz a forma de recebimento escolhida (`correios`, `portador`
 
 O campo `origem` traz também `codigo` (código de primeira compra ou de indicação usado na reserva) e `indicacao` (o código de indicação gerado para quem reservou). Para saber quem indicou um cliente, procurar a linha cujo `origem->>indicacao` é igual ao `origem->>codigo` dele. Regras em `/codigo.js` e no README.
 
+## Roleta (`giros`)
+
+Rodar `backend/roleta.sql` no SQL Editor, depois de `supabase.sql`. Ele cria a tabela `giros` (nome, e-mail, prêmio, código, data), a função `girar`, que faz o sorteio no banco e é a única que grava na tabela, e a visão `premios_a_conferir`.
+
+- Quem girou: Table Editor → `giros`. É a lista de contatos de quem girou, comprando ou não.
+- Antes de honrar 10%, 15% ou barra: abrir `premios_a_conferir`. Cada linha é uma reserva com código de prêmio; `confere` verdadeiro quer dizer que o código foi sorteado para o mesmo e-mail da reserva. Falso ou vazio: o código não foi sorteado, não honrar.
+- Cada e-mail gira uma vez. Com mais de 300 giros em uma hora, o giro só devolve 5% até a hora virar (trava contra abuso).
+- Enquanto este arquivo não for rodado, o site sorteia no navegador e não registra ninguém.
+
 ## Segurança
 
 - O público só insere. Não há leitura, alteração nem exclusão pela chave pública.

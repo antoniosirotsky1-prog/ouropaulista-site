@@ -3,7 +3,8 @@
    o acréscimo não é cobrado (código de 5%).
    A roda da home sorteia, por decisão do Antonio em 19/11/2026: 5% (quase sempre), 10%, 15% ou uma barra de 1 g.
    As chances estão em CHANCES, abaixo, e são as mesmas publicadas nas regras do site: se mudar aqui, mude lá.
-   Os códigos de 10%, 15% e da barra são amarrados ao e-mail de quem girou (ver premio e confere).
+   O sorteio é feito no banco (função girar, backend/roleta.sql), que registra nome, e-mail, prêmio e código.
+   Prêmio de 10%, 15% ou barra só vale se estiver registrado lá com o e-mail da reserva.
    Depois da primeira reserva o cliente recebe um código de indicação próprio (OP + protocolo + dígito de conferência).
    A conferência final (primeira compra, indicação válida) é feita no atendimento, antes do pagamento. */
 (function () {
@@ -42,6 +43,28 @@
     c = limpa(c); if (!valido(c)) return null;
     return { pct: c.indexOf('D10') === 0 ? 10 : c.indexOf('D15') === 0 ? 15 : 5, barra: c.indexOf('B1G') === 0 };
   }
+  /* Giro da roda. O sorteio é feito no banco (função girar, em backend/roleta.sql), que guarda nome, e-mail, prêmio e
+     código; cada e-mail gira uma vez. Devolve sempre { premio, codigo }.
+     Sem banco configurado ou enquanto a função não existir (404), sorteia aqui mesmo, como antes.
+     Se o banco existir e falhar, o giro dá o código geral de 5%: prêmio maior só vale registrado. */
+  function girar(nome, email) {
+    var C = window.OP_CONFIG || {}, local = function () { var t = sortear(); return { premio: t, codigo: premio(email, t) }; };
+    if (!C.supabaseUrl || !C.supabaseKey || !window.fetch) return Promise.resolve(local());
+    var ctl = window.AbortController ? new AbortController() : null, tm = setTimeout(function () { if (ctl) ctl.abort(); }, 6000);
+    return fetch(C.supabaseUrl.replace(/\/$/, '') + '/rest/v1/rpc/girar', {
+      method: 'POST', signal: ctl ? ctl.signal : undefined,
+      headers: { 'Content-Type': 'application/json', apikey: C.supabaseKey, Authorization: 'Bearer ' + C.supabaseKey },
+      body: JSON.stringify({ p_nome: nome, p_email: email })
+    }).then(function (r) {
+      clearTimeout(tm);
+      if (r.status === 404) return local();
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json().then(function (j) {
+        if (!j || !/^(5|10|15|B)$/.test(j.premio) || !valido(j.codigo)) throw new Error('resposta');
+        return { premio: j.premio, codigo: limpa(j.codigo) };
+      });
+    }).catch(function () { clearTimeout(tm); return { premio: '5', codigo: GERAL }; });
+  }
   function rotulo(c) { var d = desconto(c); return !d ? '' : d.barra ? 'uma barra de 1 g' : d.pct + '% a menos'; }
   function gerar(id) { var b = 'OP' + String(id || '').replace(/[^0-9a-f]/gi, '').slice(0, 6).toUpperCase(); return b.length === 8 ? b + digito(b) : ''; }
   function get() { try { var c = localStorage.getItem('op_codigo'); return valido(c) ? limpa(c) : ''; } catch (e) { return ''; } }
@@ -53,10 +76,10 @@
     return x.pct > 5 ? Math.ceil(v * (1 - x.pct / 100)) : k;
   }
   window.OP_CODIGO = { GERAL: GERAL, limpa: limpa, valido: valido, gerar: gerar, get: get, set: set, preco: preco, MIN_INDICADO_G: 50,
-    CHANCES: CHANCES, sortear: sortear, premio: premio, confere: confere, desconto: desconto, rotulo: rotulo };
+    CHANCES: CHANCES, sortear: sortear, girar: girar, premio: premio, confere: confere, desconto: desconto, rotulo: rotulo };
 
-  /* Usuário: nome e e-mail digitados antes de girar a roda. Ficam só neste navegador (localStorage) e servem de
-     pré-cadastro: a página de reserva já abre com eles preenchidos. Nada é enviado antes da reserva. */
+  /* Usuário: nome e e-mail digitados antes de girar a roda. Ficam neste navegador (localStorage) e servem de
+     pré-cadastro: a página de reserva já abre com eles preenchidos. No giro, nome e e-mail vão para o banco (giros). */
   var EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
   function uget() {
     try { var u = JSON.parse(localStorage.getItem('op_user') || 'null'); return u && u.nome && EMAIL.test(u.email) ? { nome: String(u.nome).slice(0, 80), email: String(u.email).slice(0, 120) } : null; } catch (e) { return null; }
