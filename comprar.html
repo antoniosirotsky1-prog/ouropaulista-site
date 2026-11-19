@@ -117,6 +117,27 @@ fieldset{border:0;min-width:0}
 .qty button:active{transform:scale(0.97)}
 .qty output{width:48px;height:48px;display:grid;place-items:center;font:600 16px/1 var(--d);border-left:1px solid var(--rule);border-right:1px solid var(--rule);font-variant-numeric:tabular-nums}
 
+/* recebimento */
+.ship{margin-top:32px;display:grid;gap:12px}
+.ship label{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;padding:14px 16px;border:1px solid var(--rule);cursor:pointer;transition:transform 160ms var(--ease-out),border-color 200ms ease}
+.ship label:active{transform:scale(0.99)}
+.ship input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.ship strong{font-weight:600}
+.ship b{font:500 16px/24px var(--mono);letter-spacing:-0.01em;white-space:nowrap;text-align:right}
+.ship span{grid-column:1 / -1;font-size:14px;line-height:20px;color:var(--ink-2);text-wrap:pretty}
+.ship label:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.ship label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:3px}
+.ship label.off{cursor:default}
+.ship label.off:active{transform:none}
+.ship label.off strong,.ship label.off b{color:var(--ink-2)}
+.ship label.off input{cursor:default}
+.sum{margin-top:24px;border-top:1px solid var(--ink)}
+.sum div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.sum dt{font-size:14px;line-height:20px;color:var(--ink-2)}
+.sum dd{font:500 14px/20px var(--mono);text-align:right}
+.sum div:last-child dt{color:var(--ink);font-weight:600}
+.sum div:last-child dd{font-size:16px;line-height:24px}
+
 /* envio de arquivo */
 .drop{grid-column:span 6;display:grid;gap:12px}
 .drop .zone{position:relative;border:1px dashed var(--ink-2);padding:28px 20px;text-align:center;cursor:pointer;transition:transform 160ms var(--ease-out),background-color 200ms ease}
@@ -257,7 +278,7 @@ fieldset{border:0;min-width:0}
 
     <section class="step" data-step="endereco" data-phase="1" hidden>
       <h1 tabindex="-1">Onde entregamos o seu ouro?</h1>
-      <p class="lead">Digite o CEP e completamos o restante. O frete é informado antes do pagamento.</p>
+      <p class="lead">Digite o CEP e completamos o restante. No próximo passo você escolhe como receber e vê o frete.</p>
       <div class="fields">
         <div class="fld t"><label for="cep">CEP</label><input id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" required><span class="err" id="e-cep" role="alert"></span></div>
         <div class="fld q"><label for="rua">Logradouro</label><input id="rua" name="rua" autocomplete="address-line1" required><span class="err" id="e-rua" role="alert"></span></div>
@@ -267,6 +288,17 @@ fieldset{border:0;min-width:0}
         <div class="fld t"><label for="cidade">Cidade</label><input id="cidade" name="cidade" autocomplete="address-level2" required><span class="err" id="e-cidade" role="alert"></span></div>
         <div class="fld" style="grid-column:span 1;min-width:76px"><label for="uf">UF</label><select id="uf" name="uf" autocomplete="address-level1" required></select><span class="err"></span></div>
       </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+    </section>
+
+    <section class="step" data-step="entrega" data-phase="1" hidden>
+      <h1 tabindex="-1">Como você quer receber?</h1>
+      <p class="lead">O frete já entra no total estimado. Ouro e frete são confirmados antes do pagamento.</p>
+      <fieldset><legend class="vh">Forma de recebimento</legend>
+        <div class="ship" id="ship"></div>
+      </fieldset>
+      <dl class="sum" id="sum" aria-live="polite" hidden></dl>
+      <p class="hint" id="ship-note" style="margin-top:16px" hidden></p>
       <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
     </section>
 
@@ -317,7 +349,7 @@ fieldset{border:0;min-width:0}
       <ol class="next">
         <li><span>A instituição autorizada pelo Banco Central analisa o seu cadastro em até dois dias úteis.</span></li>
         <li><span>Você recebe o valor do dia e as instruções de pagamento. O pagamento é feito diretamente à instituição.</span></li>
-        <li><span>A barra segue para o seu endereço, com nota fiscal em seu nome.</span></li>
+        <li><span id="fim-entrega">A barra segue para o seu endereço, com nota fiscal em seu nome.</span></li>
       </ol>
       <p class="proto" id="proto"></p>
       <p class="hint" id="wa-hint" style="margin-top:8px" hidden>Confirme pelo WhatsApp para receber por lá o valor do dia e as instruções.</p>
@@ -343,6 +375,7 @@ fieldset{border:0;min-width:0}
 <footer class="foot"><span>Venda, pagamento e nota fiscal por instituição autorizada pelo Banco Central. A Ouro Paulista não recebe dinheiro nem guarda ouro. Imagem ilustrativa.</span><a href="/privacidade.html">Privacidade</a></footer>
 
 <script src="/config.js"></script>
+<script src="/frete.js"></script>
 <script src="/comprar.js"></script>
 <script src="/medir.js"></script>
 </body>
