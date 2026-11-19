@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reservar ouro | Ouro Paulista</title>
+<meta name="description" content="Reserve a sua barra de ouro 999,9 em poucos passos. Cadastro, pagamento e nota fiscal com instituição autorizada pelo Banco Central.">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="strict-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'self' https://*.supabase.co https://viacep.com.br; form-action 'none'; base-uri 'none'">
+<link rel="canonical" href="https://ouropaulista.com/comprar.html">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#131209" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Ouro Paulista">
+<meta property="og:title" content="Reservar ouro | Ouro Paulista">
+<meta property="og:description" content="Reserve a sua barra de ouro 999,9 em poucos passos.">
+<meta property="og:url" content="https://ouropaulista.com/comprar.html">
+<meta property="og:image" content="https://ouropaulista.com/og.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
+<link rel="apple-touch-icon" href="/favicon_180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FFFFFF; --surface:#F5F4F0; --ink:#111111; --ink-2:#55534E; --rule:#E2E0DA; --blister:#CFCDC6;
+  --gold:#D4A017; --gold-ink:#7A5E0A; --focus:#7A5E0A;
+  --btn-bg:#111111; --btn-ink:#FFFFFF; --logo-filter:none;
+  --f:"Schibsted Grotesk",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#131209; --surface:#1F1F1F; --ink:#EEECE7; --ink-2:#ABA89F; --rule:#313131; --blister:#3A3A38;
+    --gold-ink:#E2B53A; --focus:#E2B53A; --btn-bg:#EEECE7; --btn-ink:#131209; --logo-filter:invert(1); color-scheme:dark}
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f);font-size:16px;line-height:24px;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+h1,h2,p,ul,ol,dl,dd,dt,fieldset,legend{margin:0;padding:0}
+ul,ol{list-style:none}
+fieldset{border:0;min-width:0}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.label{font-family:var(--mono);font-size:12px;line-height:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 24px;border-radius:6px;border:1px solid transparent;
+  font:600 16px/24px var(--f);text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:transform 160ms var(--ease-out),opacity 200ms ease}
+.btn:active{transform:scale(0.97)}
+.btn[disabled]{opacity:.45;cursor:default}
+.btn-primary{background:var(--btn-bg);color:var(--btn-ink)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn-text{background:none;border:0;padding:12px 0;min-height:48px;font:500 16px/24px var(--f);color:var(--ink-2);cursor:pointer;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--rule)}
+
+/* topo */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px;min-height:64px}
+.top img{filter:var(--logo-filter)}
+.top .count{font:500 12px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.prog{height:1px;background:var(--rule)}
+.prog i{display:block;height:1px;background:var(--gold);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform 300ms var(--ease-out)}
+
+/* divisão */
+.split{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.ask{display:flex;justify-content:flex-end;padding:56px clamp(24px,5vw,72px) 72px}
+.ask-in{width:100%;max-width:520px;display:flex;flex-direction:column;justify-content:center}
+.stage{background:var(--surface);border-left:1px solid var(--rule);position:sticky;top:0;height:calc(100dvh - 65px);display:flex;flex-direction:column;justify-content:space-between;padding:56px clamp(24px,5vw,72px) 40px;overflow:hidden}
+@media (max-width:899px){
+  .split{grid-template-columns:1fr}
+  .stage{order:-1;position:static;height:auto;border-left:0;border-bottom:1px solid var(--rule);padding:20px 24px;flex-direction:row;align-items:center;gap:20px}
+  .ask{padding:32px 24px 48px;justify-content:flex-start}
+  .ask-in{justify-content:flex-start}
+}
+
+/* etapa */
+.step h1{font-size:clamp(28px,3.4vw,40px);line-height:1.1;font-weight:700;letter-spacing:-0.02em;text-wrap:balance;outline:0}
+.step .lead{margin-top:12px;color:var(--ink-2);max-width:44ch;text-wrap:pretty}
+.step .fields{margin-top:32px;display:grid;gap:16px;grid-template-columns:repeat(6,minmax(0,1fr))}
+.step .actions{margin-top:32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.step > *{animation:rise 300ms var(--ease-out) both}
+.step > *:nth-child(2){animation-delay:40ms}.step > *:nth-child(3){animation-delay:80ms}.step > *:nth-child(4){animation-delay:120ms}.step > *:nth-child(5){animation-delay:160ms}
+.step.back > *{animation-name:rise-back}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes rise-back{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+
+.fld{display:grid;gap:4px;grid-column:span 6;align-content:start}
+.fld.h{grid-column:span 3}.fld.t{grid-column:span 2}.fld.q{grid-column:span 4}
+@media (max-width:520px){.fld.h,.fld.q{grid-column:span 6}.fld.t{grid-column:span 3}}
+.fld label{font-size:14px;line-height:20px;font-weight:500}
+.fld input,.fld select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:0;padding:11px 12px;min-height:48px;width:100%;transition:border-color 200ms ease}
+.fld input:focus-visible,.fld select:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.fld input[aria-invalid="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.err{font-size:12px;line-height:16px;min-height:16px;color:var(--ink)}
+.chk{grid-column:span 6;display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:20px;cursor:pointer}
+.chk input{width:20px;height:20px;flex:none;margin:0;accent-color:var(--ink)}
+.hint{grid-column:span 6;font-size:14px;line-height:20px;color:var(--ink-2)}
+
+/* pesos */
+.weights{margin-top:32px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.weights label{position:relative;display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--rule);cursor:pointer;transition:transform 160ms var(--ease-out),border-color 200ms ease}
+.weights label:active{transform:scale(0.97)}
+.weights input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.weights strong{font:500 24px/32px var(--mono);letter-spacing:-0.02em}
+.weights span{font-size:12px;line-height:16px;color:var(--ink-2)}
+.weights label:has(input:checked){border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.weights label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:3px}
+.qty{margin-top:24px;display:flex;align-items:center;gap:16px}
+.qty .ctl{display:inline-flex;border:1px solid var(--rule)}
+.qty button{width:48px;height:48px;background:none;border:0;font:500 20px/1 var(--mono);color:var(--ink);cursor:pointer}
+.qty button:active{transform:scale(0.97)}
+.qty output{width:48px;height:48px;display:grid;place-items:center;font:500 16px/1 var(--mono);border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+
+/* envio de arquivo */
+.drop{grid-column:span 6;display:grid;gap:12px}
+.drop .zone{position:relative;border:1px dashed var(--ink-2);padding:28px 20px;text-align:center;cursor:pointer;transition:transform 160ms var(--ease-out),background-color 200ms ease}
+.drop .zone.over{background:var(--surface)}
+.drop .zone:active{transform:scale(0.99)}
+.drop .zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%}
+.drop .zone strong{display:block;font-weight:600}
+.drop .zone span{display:block;font-size:14px;line-height:20px;color:var(--ink-2);margin-top:4px}
+.files{display:grid;gap:8px}
+.files li{display:flex;align-items:center;gap:12px;border:1px solid var(--rule);padding:8px;animation:rise 300ms var(--ease-out) both}
+.files img,.files .pdf{width:48px;height:48px;object-fit:cover;flex:none;background:var(--surface);display:grid;place-items:center;font:500 12px/1 var(--mono);color:var(--ink-2)}
+.files .n{flex:1;min-width:0;font-size:14px;line-height:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.files .n small{display:block;font:400 12px/16px var(--mono);color:var(--ink-2)}
+.files button{background:none;border:0;min-width:44px;min-height:44px;font:500 14px/20px var(--f);color:var(--ink-2);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+
+/* revisão */
+.review{margin-top:32px;border-top:1px solid var(--ink)}
+.review div{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--rule)}
+.review dt{font:500 12px/16px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.review dd{font-size:14px;line-height:20px;overflow-wrap:anywhere}
+.review button{background:none;border:0;padding:0;font:500 14px/20px var(--f);color:var(--ink-2);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.status{margin-top:16px;font-size:14px;line-height:20px;min-height:20px}
+.next{margin-top:32px;display:grid;gap:16px;counter-reset:n}
+.next li{display:grid;grid-template-columns:32px 1fr;gap:12px;font-size:16px;line-height:24px}
+.next li::before{counter-increment:n;content:"0" counter(n);font:500 12px/24px var(--mono);color:var(--gold-ink)}
+.proto{margin-top:24px;font:500 14px/20px var(--mono);color:var(--ink-2)}
+
+/* palco */
+.scenes{position:relative;flex:1;min-height:0;display:grid;place-items:center}
+.scene{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:opacity 200ms ease;pointer-events:none}
+.scene.on{opacity:1}
+.scene svg{width:min(260px,60%);height:auto;color:var(--ink);overflow:visible}
+.scene svg *{fill:none;stroke:currentColor;stroke-width:.75;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-width:1.25px}
+.scene svg .g{stroke:var(--gold)}
+.scene .p{opacity:0;transform:translateY(8px);transform-box:fill-box}
+.scene.on .p{animation:rise 300ms var(--ease-out) both;animation-delay:calc(var(--i,0) * 70ms + 80ms)}
+.scene.on .float{animation:float 5s ease-in-out 600ms infinite alternate}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.blister{padding:16px;border:1px solid var(--blister);border-radius:8px;background:var(--bg)}
+.bar{width:104px;height:156px;border-radius:4px;background:#D4A017;background-image:linear-gradient(135deg,#E7C45E 0%,#D4A017 45%,#B8860B 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35),inset 0 -2px 0 rgba(122,94,10,.4),0 1px 2px rgba(17,17,17,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10% 0}
+.bar img{width:66%;mix-blend-mode:multiply;opacity:.55;filter:sepia(1) saturate(1.6) brightness(.75)}
+.bar span{font:600 12px/1 var(--f);color:#6E5208;letter-spacing:.02em;white-space:nowrap}
+.say{max-width:420px}
+.say h2{font-size:clamp(20px,2vw,28px);line-height:1.2;font-weight:700;letter-spacing:-0.02em;text-wrap:balance}
+.say p{margin-top:8px;font-size:14px;line-height:20px;color:var(--ink-2);text-wrap:pretty}
+.say.swap > *{animation:rise 300ms var(--ease-out) both}
+.say.swap > *:nth-child(2){animation-delay:60ms}
+.trail{margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.trail li{padding-top:10px;border-top:1px solid var(--rule);font:500 12px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);transition:color 200ms ease,border-color 200ms ease}
+.trail li.done{border-color:var(--gold)}
+.trail li.now{border-color:var(--ink);color:var(--ink)}
+@media (max-width:899px){
+  .scenes{flex:none;width:88px;height:88px}
+  .scene svg{width:72px}
+  .blister{padding:6px;border-radius:4px}.bar{width:40px;height:60px;gap:2px}.bar span{font-size:7px}
+  .say h2{font-size:18px;line-height:24px}
+  .say p{display:none}
+  .trail{display:none}
+}
+.foot{padding:16px 24px;border-top:1px solid var(--rule);font-size:12px;line-height:16px;color:var(--ink-2);display:flex;gap:8px 24px;flex-wrap:wrap;justify-content:space-between}
+.noscript{padding:48px 24px;max-width:560px;margin:0 auto}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition-duration:1ms!important}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <a href="/" aria-label="Ouro Paulista, voltar à loja"><img src="/lockup.png" alt="Ouro Paulista" width="86" height="40"></a>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+  <div class="prog" aria-hidden="true"><i id="prog"></i></div>
+</header>
+
+<noscript><div class="noscript"><h1>Reservar ouro</h1><p>Esta página precisa de JavaScript. Você também pode reservar pelo WhatsApp: <a href="https://wa.me/5511987478144">+55 11 98747-8144</a>.</p></div></noscript>
+
+<main class="split" id="conteudo" hidden>
+  <div class="ask"><form class="ask-in" id="flow" novalidate autocomplete="on">
+
+    <section class="step" data-step="barra" data-phase="0">
+      <h1 tabindex="-1">Qual barra você quer reservar?</h1>
+      <p class="lead">Ouro 999,9, lacrado e numerado. O valor do dia é confirmado antes do pagamento.</p>
+      <fieldset><legend class="vh">Peso da barra</legend>
+        <div class="weights" id="weights"></div>
+      </fieldset>
+      <div class="qty"><span id="qty-l">Quantidade</span>
+        <span class="ctl" role="group" aria-labelledby="qty-l"><button type="button" id="q-less" aria-label="Diminuir quantidade">−</button><output id="q-out" aria-live="polite">1</output><button type="button" id="q-more" aria-label="Aumentar quantidade">+</button></span>
+      </div>
+      <p class="hint" id="limit-note" style="margin-top:16px" hidden>Para compras acima de R$ 10.000 por ano, a instituição pode pedir documentos adicionais.</p>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button></div>
+    </section>
+
+    <section class="step" data-step="nome" data-phase="1" hidden>
+      <h1 tabindex="-1">Em nome de quem fica a nota fiscal?</h1>
+      <p class="lead">O ouro é registrado em seu nome. Use os dados de quem compra.</p>
+      <div class="fields">
+        <div class="fld"><label for="nome">Nome completo</label><input id="nome" name="nome" autocomplete="name" required><span class="err" id="e-nome" role="alert"></span></div>
+        <div class="fld"><label for="cpf">CPF</label><input id="cpf" name="cpf" inputmode="numeric" autocomplete="off" maxlength="14" placeholder="000.000.000-00" required><span class="err" id="e-cpf" role="alert"></span></div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+    </section>
+
+    <section class="step" data-step="perfil" data-phase="1" hidden>
+      <h1 tabindex="-1">Conte um pouco sobre você.</h1>
+      <p class="lead">São informações que toda instituição autorizada pelo Banco Central pede a quem compra ouro.</p>
+      <div class="fields">
+        <div class="fld h"><label for="nasc">Data de nascimento</label><input id="nasc" name="nasc" type="date" autocomplete="bday" required><span class="err" id="e-nasc" role="alert"></span></div>
+        <div class="fld h"><label for="prof">Profissão</label><input id="prof" name="prof" autocomplete="organization-title" required><span class="err" id="e-prof" role="alert"></span></div>
+        <label class="chk"><input type="checkbox" id="pep" name="pep"><span>Sou pessoa exposta politicamente, ou parente ou pessoa próxima de uma.</span></label>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+    </section>
+
+    <section class="step" data-step="contato" data-phase="1" hidden>
+      <h1 tabindex="-1">Como falamos com você?</h1>
+      <p class="lead">Avisamos cada etapa: cadastro aprovado, valor do dia, envio e entrega.</p>
+      <div class="fields">
+        <div class="fld"><label for="cel">Celular com DDD</label><input id="cel" name="cel" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="(11) 90000-0000" required><span class="err" id="e-cel" role="alert"></span></div>
+        <div class="fld"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="email" required><span class="err" id="e-email" role="alert"></span></div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+    </section>
+
+    <section class="step" data-step="endereco" data-phase="1" hidden>
+      <h1 tabindex="-1">Onde entregamos o seu ouro?</h1>
+      <p class="lead">Digite o CEP e completamos o restante.</p>
+      <div class="fields">
+        <div class="fld t"><label for="cep">CEP</label><input id="cep" name="cep" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" required><span class="err" id="e-cep" role="alert"></span></div>
+        <div class="fld q"><label for="rua">Logradouro</label><input id="rua" name="rua" autocomplete="address-line1" required><span class="err" id="e-rua" role="alert"></span></div>
+        <div class="fld t"><label for="num">Número</label><input id="num" name="num" autocomplete="off" required><span class="err" id="e-num" role="alert"></span></div>
+        <div class="fld q"><label for="comp">Complemento (opcional)</label><input id="comp" name="comp" autocomplete="address-line2"><span class="err"></span></div>
+        <div class="fld h"><label for="bairro">Bairro</label><input id="bairro" name="bairro" autocomplete="address-level3" required><span class="err" id="e-bairro" role="alert"></span></div>
+        <div class="fld t"><label for="cidade">Cidade</label><input id="cidade" name="cidade" autocomplete="address-level2" required><span class="err" id="e-cidade" role="alert"></span></div>
+        <div class="fld" style="grid-column:span 1;min-width:76px"><label for="uf">UF</label><select id="uf" name="uf" autocomplete="address-level1" required></select><span class="err"></span></div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+    </section>
+
+    <section class="step" data-step="documento" data-phase="2" hidden>
+      <h1 tabindex="-1">Envie um documento de identidade.</h1>
+      <p class="lead">RG ou CNH, frente e verso. Pode ser foto tirada agora ou arquivo em PDF.</p>
+      <div class="fields">
+        <div class="drop" data-drop="documento" data-max="2">
+          <label class="zone"><input type="file" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf" multiple><strong>Tirar foto ou escolher arquivo</strong><span>Até 2 arquivos, 10 MB cada</span></label>
+          <ul class="files" aria-live="polite"></ul>
+          <span class="err" role="alert"></span>
+        </div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+    </section>
+
+    <section class="step" data-step="comprovante" data-phase="2" hidden>
+      <h1 tabindex="-1">Envie um comprovante de endereço.</h1>
+      <p class="lead">Conta de luz, água, gás, telefone ou internet, emitida nos últimos 90 dias.</p>
+      <div class="fields">
+        <div class="drop" data-drop="comprovante" data-max="1">
+          <label class="zone"><input type="file" accept="image/jpeg,image/png,image/webp,image/heic,application/pdf"><strong>Tirar foto ou escolher arquivo</strong><span>1 arquivo, até 10 MB</span></label>
+          <ul class="files" aria-live="polite"></ul>
+          <span class="err" role="alert"></span>
+        </div>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+    </section>
+
+    <section class="step" data-step="revisao" data-phase="2" hidden>
+      <h1 tabindex="-1">Confira e envie.</h1>
+      <p class="lead">Nada é cobrado agora. Você só paga depois de receber o valor do dia e concordar.</p>
+      <dl class="review" id="review"></dl>
+      <div class="fields" style="margin-top:24px">
+        <label class="chk"><input type="checkbox" id="ok" name="ok" required><span>Autorizo a Ouro Paulista a guardar estes dados e documentos e a encaminhá-los à instituição autorizada pelo Banco Central, para a análise do meu cadastro e a emissão da nota fiscal, conforme a <a href="/privacidade.html" target="_blank" rel="noopener">política de privacidade</a>.</span></label>
+        <span class="err" id="e-ok" role="alert" style="grid-column:span 6"></span>
+      </div>
+      <div class="actions"><button class="btn btn-primary" type="button" id="send">Enviar pedido</button><button class="btn-text" type="button" data-back>Voltar</button></div>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="step" data-step="fim" data-phase="3" hidden>
+      <p class="label">Pedido recebido</p>
+      <h1 tabindex="-1" style="margin-top:8px">Recebemos a sua reserva.</h1>
+      <ol class="next">
+        <li><span>A instituição autorizada pelo Banco Central analisa o seu cadastro em até dois dias úteis.</span></li>
+        <li><span>Você recebe o valor do dia e as instruções de pagamento. O pagamento é feito diretamente à instituição.</span></li>
+        <li><span>A barra segue para o seu endereço, com nota fiscal em seu nome.</span></li>
+      </ol>
+      <p class="proto" id="proto"></p>
+      <div class="actions"><a class="btn btn-primary" id="wa-end" target="_blank" rel="noopener">Falar com a Ouro Paulista</a><a class="btn-text" href="/">Voltar à loja</a></div>
+    </section>
+
+  </form></div>
+
+  <aside class="stage" aria-hidden="true">
+    <div class="scenes">
+      <div class="scene" data-scene="barra"><div class="p"><div class="float"><div class="blister"><div class="bar"><img src="/emblem.png" alt="" width="440" height="590"><span id="bar-w">10 g</span></div></div></div></div></div>
+      <div class="scene" data-scene="nome"><svg viewBox="0 0 48 48"><rect class="p" style="--i:0" x="5" y="11" width="38" height="26" rx="1.5"/><circle class="p" style="--i:1" cx="16" cy="21" r="4"/><path class="p" style="--i:2" d="M9.5 32c1-4 3.500-5.500 6.500-5.500s5.500 1.500 6.500 5.500"/><path class="p" style="--i:3" d="M28 19h10M28 24h10"/><path class="p g" style="--i:4" d="M28 30h6"/></svg></div>
+      <div class="scene" data-scene="perfil"><svg viewBox="0 0 48 48"><rect class="p" style="--i:0" x="8" y="10" width="32" height="30" rx="1.5"/><path class="p" style="--i:1" d="M8 18h32M16 6v8M32 6v8"/><path class="p" style="--i:2" d="M14 25h4M22 25h4M30 25h4M14 32h4M22 32h4"/><rect class="p g" style="--i:3" x="29" y="29.500" width="6" height="5"/></svg></div>
+      <div class="scene" data-scene="contato"><svg viewBox="0 0 48 48"><rect class="p" style="--i:0" x="9" y="5" width="20" height="38" rx="2.5"/><path class="p" style="--i:1" d="M16 38h6"/><path class="p" style="--i:2" d="M24 14h17v12H31l-4 4v-4h-3z"/><path class="p g" style="--i:3" d="M29 20h7"/></svg></div>
+      <div class="scene" data-scene="endereco"><svg viewBox="0 0 48 48"><path class="p" style="--i:0" d="M6 24L24 8l18 16"/><path class="p" style="--i:1" d="M11 20v20h26V20"/><path class="p" style="--i:2" d="M20 40V29h8v11"/><path class="p g" style="--i:3" d="M2 40h44"/></svg></div>
+      <div class="scene" data-scene="documento"><svg viewBox="0 0 48 48"><path class="p" style="--i:0" d="M4 14V8h6M38 8h6v6M44 34v6h-6M10 40H4v-6"/><rect class="p" style="--i:1" x="9" y="14" width="30" height="20" rx="1.5"/><circle class="p" style="--i:2" cx="18" cy="22" r="3"/><path class="p" style="--i:2" d="M13 30c.800-2.500 2.500-3.500 5-3.500s4.200 1 5 3.500M27 21h8M27 26h8"/><path class="p g" style="--i:3" d="M4 24h40"/></svg></div>
+      <div class="scene" data-scene="comprovante"><svg viewBox="0 0 48 48"><path class="p" style="--i:0" d="M11 5h19l8 8v30H11z"/><path class="p" style="--i:1" d="M30 5v8h8"/><path class="p" style="--i:2" d="M17 20h14M17 26h14M17 32h8"/><path class="p g" style="--i:3" d="M28 34l3 3 6-7"/></svg></div>
+      <div class="scene" data-scene="revisao"><svg viewBox="0 0 48 48"><path class="p" style="--i:0" d="M24 5l15 6v11c0 9.500-6.500 17-15 20-8.500-3-15-10.500-15-20V11z"/><path class="p g" style="--i:2" d="M17 24.500l5 5 9-10"/></svg></div>
+      <div class="scene" data-scene="fim"><svg viewBox="0 0 48 48"><path class="p" style="--i:0" d="M6 16l18-9 18 9v18l-18 9-18-9z"/><path class="p" style="--i:1" d="M6 16l18 9 18-9M24 25v18"/><path class="p" style="--i:2" d="M15 11.500l18 9v6"/><path class="p g" style="--i:3" d="M2 43h44"/></svg></div>
+    </div>
+    <div>
+      <div class="say" id="say"><h2></h2><p></p></div>
+      <ol class="trail" id="trail"><li>Pedido</li><li>Cadastro</li><li>Documentos</li><li>Entrega</li></ol>
+    </div>
+  </aside>
+</main>
+
+<footer class="foot"><span>Venda, pagamento e nota fiscal por instituição autorizada pelo Banco Central. A Ouro Paulista não recebe dinheiro nem guarda ouro. Imagem ilustrativa.</span><a href="/privacidade.html">Privacidade</a></footer>
+
+<script src="/config.js"></script>
+<script src="/comprar.js"></script>
+</body>
+</html>
