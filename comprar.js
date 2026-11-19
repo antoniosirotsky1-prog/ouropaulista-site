@@ -281,7 +281,8 @@
     done = true; sending = false;
     var proto = id.slice(0, 8).toUpperCase();
     $('proto').textContent = ONLINE ? 'Protocolo ' + proto : 'Envie na conversa a foto de um documento de identidade e de um comprovante de endereço.';
-    $('wa-end').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(ONLINE ? 'Olá. Enviei a minha reserva pelo site. Protocolo ' + proto + '.' : 'Olá. Acabei de enviar a minha reserva pelo site.');
+    $('wa-end').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(ONLINE ? 'Olá. Enviei a minha reserva pelo site. Protocolo ' + proto + '. Barra: ' + st.qtd + ' × ' + st.barra + ' g.' : 'Olá. Acabei de enviar a minha reserva pelo site.');
+    if (ONLINE) { $('wa-end').textContent = 'Confirmar pelo WhatsApp'; $('wa-hint').hidden = false; }
     show(steps.length - 1);
     try { history.replaceState({ i: cur }, ''); } catch (e) {}
   }
