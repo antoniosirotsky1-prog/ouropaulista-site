@@ -33,6 +33,8 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 ## Home (`index.html`, `home.js`) e arte da reserva (`fluxo.js`)
 
 - Capa: barra em 3D feita com as imagens `assets/barra-*.webp`, que gira ao trocar o peso. O Reservar anima a barra virando blister e caixa e só então abre `/comprar.html?barra=N`. O preço continua vindo de `precos.json` em `#pick-price`.
+- Ordem da home: capa, como comprar, código de 5%, por que ouro, dúvidas, história e fecho. A história fica no fim da página.
+- Barra fixa de compra (`.buybar`): aparece em todas as páginas menos na reserva. Na home ela surge quando o botão Reservar da capa sai da tela e acompanha o peso e o preço escolhidos.
 - História (`#fio`): cenas em sketch (`assets/fio/ol-*.json`, traços vetoriais desenhados conforme a rolagem) que se pintam em aquarela (`assets/fio/aq-*.webp`). Título e legenda de cada época ficam na lista `CH` de `home.js`. No fim, todas as cenas viram um quadro.
 - `fluxo.js` desenha, só no computador, a barra girando e o cartão "Sua reserva" ao lado do formulário. Ele lê os campos, não grava nem envia nada. O envio continua em `comprar.js`.
 - Bibliotecas em `assets/v/` (GSAP, ScrollTrigger, Lenis). Sem JavaScript, sem GSAP ou com movimento reduzido, a página funciona parada: os pesos trocam a imagem, o Reservar leva direto à reserva e a história aparece como quadro.
