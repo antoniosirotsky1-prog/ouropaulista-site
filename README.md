@@ -29,3 +29,10 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 - Conta: paridade pública do ouro (onça em dólar × dólar em reais ÷ 31,10) × fator da barra × gramas. As cotações vêm de fontes públicas: onça em gold-api.com; dólar em AwesomeAPI e, se ela não responder, em DolarAPI, no último boletim PTAX do Banco Central e em open.er-api.com, nessa ordem.
 - Nunca gravar neste repositório dado lido do sistema interno da instituição parceira: o repositório é público.
 - Se uma fonte falhar ou o preço variar mais de 8% de uma vez, o arquivo não é atualizado. Depois de 36 horas sem atualização o site volta a dizer que o preço é informado na reserva.
+
+## Home (`index.html`, `home.js`) e arte da reserva (`fluxo.js`)
+
+- Capa: barra em 3D feita com as imagens `assets/barra-*.webp`, que gira ao trocar o peso. O Reservar anima a barra virando blister e caixa e só então abre `/comprar.html?barra=N`. O preço continua vindo de `precos.json` em `#pick-price`.
+- História (`#fio`): cenas em sketch (`assets/fio/ol-*.json`, traços vetoriais desenhados conforme a rolagem) que se pintam em aquarela (`assets/fio/aq-*.webp`). Título e legenda de cada época ficam na lista `CH` de `home.js`. No fim, todas as cenas viram um quadro.
+- `fluxo.js` desenha, só no computador, a barra girando e o cartão "Sua reserva" ao lado do formulário. Ele lê os campos, não grava nem envia nada. O envio continua em `comprar.js`.
+- Bibliotecas em `assets/v/` (GSAP, ScrollTrigger, Lenis). Sem JavaScript, sem GSAP ou com movimento reduzido, a página funciona parada: os pesos trocam a imagem, o Reservar leva direto à reserva e a história aparece como quadro.
