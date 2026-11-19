@@ -4,8 +4,17 @@ Site estático (GitHub Pages) de ouropaulista.com.
 
 ## Fluxo de reserva (`comprar.html`)
 
-Reserva em etapas: peso, dados de quem compra, endereço, documentos, revisão. Arquivos: `comprar.html`, `comprar.js`, `config.js`.
+Reserva em etapas: peso, dados de quem compra, endereço, forma de recebimento com frete estimado, documentos, revisão. Arquivos: `comprar.html`, `comprar.js`, `frete.js`, `config.js`.
 Como ligar o banco de cadastros, modelo de segurança e formato do link de anúncio: `backend/LEIA-ME.md`.
+
+## Frete (`frete.js`)
+
+No passo de entrega, o cliente escolhe entre Correios (SEDEX com seguro), portador (cidade de São Paulo e parte da Grande São Paulo, compras a partir de R$ 2.000) e retirada em São Paulo. O frete dos Correios é uma estimativa e entra no total estimado.
+
+- Conta: postagem do SEDEX pelo destino (capital ou interior de cada estado) mais seguro de 2% sobre o que passa de R$ 25,50 por envio. Cada envio leva até R$ 38.057,59. Acima disso o pedido é dividido em mais envios, e uma barra que sozinha passa do limite não vai pelos Correios.
+- Fonte: simulador público dos Correios, consultado em 19/11/2026 (17 destinos, listados no topo de `frete.js`). O simulador bloqueia consultas em sequência, então a tabela é fixa. Para atualizar, refazer as consultas e trocar `degraus` e `nivel`.
+- Portador não tem preço público: aparece como "a confirmar".
+- O valor que vale é o confirmado antes do pagamento. A escolha vai para a coluna `entrega` do cadastro.
 
 ## Preço de referência (`precos.json`)
 

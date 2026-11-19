@@ -21,6 +21,8 @@ Ligado em 19/11/2026. Projeto `ouro-paulista-cadastros`, organização "Ouro Pau
 
 Painel do Supabase → Table Editor → `cadastros`. Documentos em Storage → `documentos`, numa pasta com o `id` do cadastro.
 
+A coluna `entrega` traz a forma de recebimento escolhida (`correios`, `portador`, `retirada` ou `combinar`), o frete estimado em reais e o valor de referência do pedido naquele momento. É estimativa: o frete que vale é o confirmado antes do pagamento.
+
 ## Segurança
 
 - O público só insere. Não há leitura, alteração nem exclusão pela chave pública.

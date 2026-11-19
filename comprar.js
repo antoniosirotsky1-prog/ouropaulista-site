@@ -16,6 +16,7 @@
     perfil: ['Mais um passo e a reserva ganha forma.', 'Leva menos de um minuto.'],
     contato: ['Você acompanha tudo de perto.', 'Sem ligações de venda. Só os avisos do seu pedido.'],
     endereco: ['Em breve, o ouro chega até você.', 'Entrega no endereço que você indicar, com nota fiscal em seu nome.'],
+    entrega: ['O ouro viaja lacrado e com seguro.', 'Você vê o frete antes de decidir. Nada é cobrado agora.'],
     documento: ['Em instantes, você estará com mais segurança.', 'O documento segue por conexão cifrada e é usado apenas na análise do cadastro.'],
     comprovante: ['Quase lá. Falta um documento.', 'Depois disso, é só conferir e enviar.'],
     revisao: ['Tudo pronto para enviar.', ONLINE ? 'Os seus dados ficam guardados com acesso restrito.' : 'Os seus dados seguem pelo seu WhatsApp, em uma mensagem pronta.'],
@@ -25,10 +26,11 @@
   var $ = function (id) { return document.getElementById(id); };
   var form = $('flow');
   var steps = [].slice.call(document.querySelectorAll('.step')).filter(function (s) {
+    if (s.dataset.step === 'entrega' && !window.OP_FRETE) return false;
     return ONLINE || (s.dataset.step !== 'documento' && s.dataset.step !== 'comprovante');
   });
   var cur = 0, done = false, sending = false;
-  var st = { barra: 10, qtd: 1, files: { documento: [], comprovante: [] } };
+  var st = { barra: 10, qtd: 1, entrega: null, files: { documento: [], comprovante: [] } };
 
   /* ---------- montagem ---------- */
   var qs = new URLSearchParams(location.search);
@@ -64,7 +66,7 @@
     im.style.transform = 'scale(' + K[st.barra] + ')';
     var v = PRECOS && Number(PRECOS.barras[st.barra]);
     $('preco').hidden = !(v > 0);
-    if (v > 0) $('preco').textContent = 'Preço de referência: ' + BRL.format(v * st.qtd) + ' (' + PRECOS.quando + '). Frete à parte. O valor final é confirmado antes do pagamento.';
+    if (v > 0) $('preco').textContent = 'Preço de referência: ' + BRL.format(v * st.qtd) + ' (' + PRECOS.quando + '). O frete é calculado pelo CEP, no passo de entrega. O valor final é confirmado antes do pagamento.';
   }
   var PRECOS = null, BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   $('weights').addEventListener('keydown', function () { byKey = true; });
@@ -79,6 +81,59 @@
     PRECOS = { barras: d.barras, quando: t.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) };
     paintBarra();
   }).catch(function () {});
+
+  /* ---------- recebimento e frete (estimativa: ver frete.js) ---------- */
+  var BRL0 = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+  /* Opções para a barra e o endereço atuais, com a escolha em vigor. Sem frete.js, devolve null. */
+  function entrega() {
+    if (!window.OP_FRETE) return null;
+    var r = window.OP_FRETE.calcular({ uf: $('uf').value, cidade: $('cidade').value, unit: PRECOS ? Number(PRECOS.barras[st.barra]) : 0, qtd: st.qtd });
+    var ok = r.opcoes.filter(function (o) { return o.ok; });
+    r.sel = ok.filter(function (o) { return o.id === st.entrega; })[0] || ok[0];
+    st.entrega = r.sel.id;
+    return r;
+  }
+  function freteTxt(o) { return o.frete === 0 ? 'sem frete' : o.frete > 0 ? BRL0.format(o.frete) : 'a confirmar'; }
+  function totalTxt(r) { return r.sel.frete === null ? BRL0.format(r.valor) + ' + frete' : BRL0.format(r.valor + r.sel.frete); }
+  function paintEntrega() {
+    var r = entrega(), box = $('ship'); if (!r) return;
+    box.textContent = '';
+    r.opcoes.forEach(function (o) {
+      var l = document.createElement('label'), i = document.createElement('input'), n = document.createElement('strong'), v = document.createElement('b'), d = document.createElement('span');
+      i.type = 'radio'; i.name = 'entrega'; i.value = o.id; i.checked = o === r.sel; i.disabled = !o.ok;
+      if (!o.ok) l.className = 'off';
+      n.textContent = o.nome; v.textContent = o.ok ? freteTxt(o) : 'indisponível'; d.textContent = o.detalhe;
+      l.appendChild(i); l.appendChild(n); l.appendChild(v); l.appendChild(d); box.appendChild(l);
+      i.addEventListener('change', function () { st.entrega = o.id; paintResumo(); });
+    });
+    paintResumo();
+  }
+  function paintResumo() {
+    var r = entrega(), o = r.sel, dl = $('sum'), note = $('ship-note');
+    dl.textContent = ''; dl.hidden = !r.valor;
+    if (r.valor) {
+      [[st.qtd + ' × ' + st.barra + ' g, preço de referência', BRL0.format(r.valor)],
+        [o.frete > 0 ? 'Frete estimado' : 'Frete', o.frete === 0 ? BRL0.format(0) : freteTxt(o)],
+        ['Total estimado', totalTxt(r)]
+      ].forEach(function (row) {
+        var d = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
+        dt.textContent = row[0]; dd.textContent = row[1]; d.appendChild(dt); d.appendChild(dd); dl.appendChild(d);
+      });
+    }
+    note.hidden = !o.partes;
+    if (o.partes) note.textContent = 'Estimativa pelos preços públicos dos Correios: postagem de ' + BRL.format(o.partes.postagem) + ' e seguro de ' + BRL.format(o.partes.seguro) + ', que é 2% do valor declarado. O frete final é confirmado junto com o valor do dia.';
+  }
+  /* Uma linha para a revisão e o WhatsApp, e os dados que vão para o cadastro. */
+  function entregaTxt() {
+    var o = entrega().sel;
+    return o.nome + (o.frete > 0 ? ' · frete estimado ' + BRL0.format(o.frete) : o.frete === 0 ? ' · sem frete' : ' · frete a confirmar');
+  }
+  function entregaDados() {
+    var r = entrega(); if (!r) return null;
+    var o = r.sel, d = { modo: o.id, frete_estimado: o.frete, envios: o.envios, valor_referencia: r.valor || null, tabela: window.OP_FRETE.TABELA.consulta };
+    if (o.partes) { d.postagem = o.partes.postagem; d.seguro = o.partes.seguro; }
+    return d;
+  }
 
   /* ---------- máscaras ---------- */
   $('cpf').addEventListener('input', function (e) {
@@ -220,6 +275,7 @@
     var prev = steps[cur];
     cur = Math.max(0, Math.min(steps.length - 1, i));
     var sec = steps[cur], key = sec.dataset.step;
+    if (key === 'entrega') paintEntrega();
     if (key === 'revisao') paintReview();
     var n = steps.length - 1;
     $('count').textContent = key === 'fim' ? 'Concluído' : 'Passo ' + (cur + 1) + ' de ' + n;
@@ -288,8 +344,13 @@
       ['Nome', val('nome'), 'nome'], ['CPF', val('cpf'), 'nome'],
       ['Perfil', nascBR() + ' · ' + val('prof') + ($('pep').checked ? ' · pessoa exposta politicamente' : ''), 'perfil'],
       ['Contato', val('cel') + ' · ' + val('email'), 'contato'],
-      ['Entrega', endereco(), 'endereco']
+      ['Endereço', endereco(), 'endereco']
     ];
+    var en = entrega();
+    if (en) {
+      rows.push(['Entrega', entregaTxt(), 'entrega']);
+      if (en.valor) rows.push(['Total', totalTxt(en) + ' · estimado, confirmado antes do pagamento', 'entrega']);
+    }
     if (ONLINE) rows.push(['Documentos', (st.files.documento.length + st.files.comprovante.length) + ' arquivos', 'documento']);
     var dl = $('review'); dl.textContent = '';
     rows.forEach(function (r) {
@@ -332,7 +393,7 @@
           id: id, barra_g: st.barra, quantidade: st.qtd, nome: val('nome'), cpf: val('cpf').replace(/\D/g, ''), nascimento: val('nasc'),
           profissao: val('prof'), pep: $('pep').checked, email: val('email'), celular: val('cel').replace(/\D/g, ''),
           cep: val('cep').replace(/\D/g, ''), logradouro: val('rua'), numero: val('num'), complemento: val('comp') || null,
-          bairro: val('bairro'), cidade: val('cidade'), uf: $('uf').value, documentos: docs, origem: origem,
+          bairro: val('bairro'), cidade: val('cidade'), uf: $('uf').value, entrega: entregaDados(), documentos: docs, origem: origem,
           consentimento_em: new Date().toISOString(), consentimento_texto: CONSENT
         })
       });
@@ -341,10 +402,10 @@
   function textoWhats() {
     return ['Olá. Quero reservar ouro físico da Ouro Paulista.', '',
       'Barra: ' + st.qtd + ' × ' + st.barra + ' g', 'Nome: ' + val('nome'), 'CPF: ' + val('cpf'), 'Nascimento: ' + nascBR(), 'Profissão: ' + val('prof'),
-      'Celular: ' + val('cel'), 'E-mail: ' + val('email'), 'Entrega: ' + endereco(),
+      'Celular: ' + val('cel'), 'E-mail: ' + val('email'), 'Endereço: ' + endereco()].concat(entrega() ? ['Entrega: ' + entregaTxt()] : []).concat([
       'Pessoa exposta politicamente: ' + ($('pep').checked ? 'sim' : 'não'), '',
       'Autorizo o envio destes dados à instituição autorizada pelo Banco Central para análise do cadastro.',
-      'Envio a seguir a foto do documento de identidade e do comprovante de endereço.'].join('\n');
+      'Envio a seguir a foto do documento de identidade e do comprovante de endereço.']).join('\n');
   }
   var sendN = 0, sendK = 0;
   function status(t) {
@@ -357,6 +418,8 @@
     $('proto').textContent = ONLINE ? 'Protocolo ' + proto : 'Envie na conversa a foto de um documento de identidade e de um comprovante de endereço.';
     $('wa-end').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(ONLINE ? 'Olá. Enviei a minha reserva pelo site. Protocolo ' + proto + '. Barra: ' + st.qtd + ' × ' + st.barra + ' g.' : 'Olá. Acabei de enviar a minha reserva pelo site.');
     if (ONLINE) { $('wa-end').textContent = 'Confirmar pelo WhatsApp'; $('wa-hint').hidden = false; }
+    if (st.entrega === 'retirada') $('fim-entrega').textContent = 'Você retira a barra em São Paulo, com horário marcado e nota fiscal em seu nome.';
+    else if (st.entrega === 'portador') $('fim-entrega').textContent = 'A barra é entregue por portador no seu endereço, com nota fiscal em seu nome.';
     show(steps.length - 1);
     try { history.replaceState({ i: cur }, ''); } catch (e) {}
   }

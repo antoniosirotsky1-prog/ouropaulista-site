@@ -34,6 +34,9 @@ create table if not exists public.cadastros (
   observacao          text
 );
 
+-- Forma de recebimento escolhida na reserva e frete estimado (ver /frete.js). Entrou em 19/11/2026.
+alter table public.cadastros add column if not exists entrega jsonb check (pg_column_size(entrega) < 1000);
+
 alter table public.cadastros enable row level security;
 
 revoke all on table public.cadastros from anon, authenticated;
