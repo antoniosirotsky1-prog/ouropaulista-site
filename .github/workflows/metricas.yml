@@ -1,0 +1,44 @@
+name: Métricas de uso
+
+# Lê o resumo agregado da medição do site (função resumo_eventos, só contagens, sem dado pessoal)
+# e grava em metricas.json no branch "metricas". Esse branch não é publicado pelo GitHub Pages.
+# A rotina de melhoria contínua lê o arquivo de lá.
+
+on:
+  schedule:
+    - cron: '5 9 * * *'   # 6h05 em São Paulo, todo dia
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: metricas
+  cancel-in-progress: false
+
+env:
+  # URL e chave pública do banco: as mesmas de config.js, visíveis a qualquer visitante.
+  SUPABASE_URL: https://mbhuplkwxtwfuzdgqhww.supabase.co
+  SUPABASE_KEY: sb_publishable_BBlTtzw0mG4jpbXcyVgouw_JZyfrm4X
+
+jobs:
+  metricas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ler o resumo dos últimos 14 dias
+        run: |
+          curl -sS --fail-with-body -X POST "$SUPABASE_URL/rest/v1/rpc/resumo_eventos" \
+            -H "apikey: $SUPABASE_KEY" -H "Authorization: Bearer $SUPABASE_KEY" \
+            -H "Content-Type: application/json" -d '{"dias":14}' -o linhas.json
+          jq -c --arg em "$(date -u +%Y-%m-%dT%H:%M:%SZ)" '{gerado_em:$em, dias:14, linhas:.}' linhas.json > metricas.json
+          jq '.linhas | length' metricas.json
+      - name: Gravar no branch metricas
+        run: |
+          mkdir out && mv metricas.json out/ && cd out
+          git init -q -b metricas
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add metricas.json
+          git commit -q -m "Métricas de uso"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" metricas
