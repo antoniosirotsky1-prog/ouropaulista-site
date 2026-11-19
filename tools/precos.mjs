@@ -3,10 +3,16 @@
 //
 // Conta: paridade pública do ouro (onça em dólar × dólar em reais ÷ 31,10) × fator da barra × gramas.
 // As duas cotações vêm de fontes públicas (o dólar tem três, em ordem de preferência). Nada aqui é lido de sistema de parceiro.
-// O fator de cada barra é o preço final sobre a paridade. A regra e a justificativa ficam no Drive do projeto.
+// O fator de cada barra é o preço final sobre a paridade (BASE × sobrepreço). A regra e a justificativa ficam no Drive do projeto.
 import { readFile, writeFile } from 'node:fs/promises';
 
-const FATOR = { 1: 1.139, 5: 1.0763, 10: 1.0763, 25: 1.0506, 50: 1.0506, 100: 1.0506 };
+// BASE: quanto a barra custa sobre a paridade, sem a Ouro Paulista (o mesmo de antes: 1,139 ÷ 1,09, 1,0763 ÷ 1,05 e 1,0506 ÷ 1,03).
+// SOBREPRECO: a parte da Ouro Paulista. Regra do Antonio de 19/11/2026: 17% na barra de 1 g e menor a cada peso acima.
+// Os degraus abaixo de 17% foram escolhidos para ficar acima dos anteriores (9%, 5% e 3%) e para o prêmio de 15% da
+// roleta não levar o preço das barras de até 10 g abaixo da BASE.
+const BASE = { 1: 1.045, 5: 1.025, 10: 1.025, 25: 1.02, 50: 1.02, 100: 1.02 };
+const SOBREPRECO = { 1: 0.17, 5: 0.15, 10: 0.13, 25: 0.10, 50: 0.08, 100: 0.06 };
+const FATOR = Object.fromEntries(Object.keys(BASE).map((g) => [g, BASE[g] * (1 + SOBREPRECO[g])]));
 const ARQUIVO = new URL('../precos.json', import.meta.url);
 const SALTO_MAXIMO = 0.08; // variação maior que 8% contra o arquivo anterior trava a publicação
 

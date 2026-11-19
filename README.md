@@ -25,6 +25,7 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 ```
 
 - `barras`: preço final em reais de cada barra (chave = gramas), já com o acréscimo da Ouro Paulista. Aparece nos cartões da loja e no primeiro passo de `/comprar.html`, sempre como "preço de referência", com data e hora.
+- Sobrepreço da Ouro Paulista (regra do Antonio de 19/11/2026): 17% na barra de 1 g, 15% na de 5 g, 13% na de 10 g, 10% na de 25 g, 8% na de 50 g e 6% na de 100 g, sobre o custo da barra. Fica em `SOBREPRECO`, em `tools/precos.mjs`. O acréscimo de 5% sem código, nas barras de até 10 g, entra por cima.
 - Quem gera: `tools/precos.mjs`, rodado pelo GitHub Actions (`.github/workflows/precos.yml`) três vezes por dia útil e uma vez no fim de semana. Também roda à mão em Actions → Preço de referência → Run workflow.
 - Conta: paridade pública do ouro (onça em dólar × dólar em reais ÷ 31,10) × fator da barra × gramas. As cotações vêm de fontes públicas: onça em gold-api.com; dólar em AwesomeAPI e, se ela não responder, em DolarAPI, no último boletim PTAX do Banco Central e em open.er-api.com, nessa ordem.
 - Nunca gravar neste repositório dado lido do sistema interno da instituição parceira: o repositório é público.
