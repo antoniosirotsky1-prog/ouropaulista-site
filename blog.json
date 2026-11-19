@@ -1,0 +1,61 @@
+{
+  "posts": [
+    {
+      "data": "2026-11-17",
+      "tipo": "noticia",
+      "titulo": "Ouro e prata caem para mínimos de um ano e meio com dólar forte e juros em alta",
+      "resumo": "A cotação internacional do ouro recuou com a valorização do dólar e a alta dos juros, segundo a Euronews.",
+      "fonte": "Euronews",
+      "url": "https://pt.euronews.com/2026/11/17/caem-precos-do-ouro-e-da-prata-para-minimos-de-ano-e-meio-com-dolar-forte-e-juros-em-alta"
+    },
+    {
+      "data": "2026-11-07",
+      "tipo": "noticia",
+      "titulo": "Banco central da China chega a 24 meses seguidos comprando ouro",
+      "resumo": "A autoridade monetária chinesa ampliou outra vez as reservas em ouro, segundo o Seoul Economic Daily.",
+      "fonte": "Seoul Economic Daily",
+      "url": "https://en.sedaily.com/international/2026/11/07/chinas-central-bank-extends-gold-buying-streak-to-24-months"
+    },
+    {
+      "data": "2026-11-03",
+      "tipo": "noticia",
+      "titulo": "Bancos centrais compraram 321 toneladas de ouro no 3º trimestre",
+      "resumo": "Alta de 42% sobre o mesmo período de 2025. No ano, até setembro, as compras somam 675 toneladas.",
+      "fonte": "World Gold Council, Gold Demand Trends Q3 2026",
+      "url": "https://www.gold.org/goldhub/research/gold-demand-trends/gold-demand-trends-q3-2026"
+    },
+    {
+      "data": "2026-10-23",
+      "tipo": "noticia",
+      "titulo": "Estreito de Ormuz tem 28 ataques a navios em outubro",
+      "resumo": "É o maior número em um mês desde o início da guerra com o Irã, em 28 de fevereiro de 2026. Desde então, foram 113 ataques.",
+      "fonte": "Reuters, via Internazionale",
+      "url": "https://www.internazionale.it/ultime-notizie-reuters/2026/10/23/ship-attacks-in-strait-of-hormuz-hit-record-high-in-october"
+    },
+    {
+      "data": "2026-08-19",
+      "tipo": "noticia",
+      "titulo": "Dívida pública dos Estados Unidos passa de US$ 40 trilhões",
+      "resumo": "A marca foi atingida em 18 de agosto de 2026, pela primeira vez, segundo o Tesouro dos EUA.",
+      "fonte": "Reuters, via The Irish Times",
+      "url": "https://www.irishtimes.com/business/2026/08/19/us-debt-tops-40tn-threshold-after-doubling-up-under-trump-and-biden/"
+    },
+    {
+      "data": "2026-06-02",
+      "tipo": "noticia",
+      "titulo": "Ouro passa os títulos dos EUA nas reservas dos bancos centrais",
+      "resumo": "No fim de 2025, o ouro era 27% das reservas dos bancos centrais do mundo, à frente dos títulos do Tesouro dos EUA (22%) e do euro (15%), segundo o Banco Central Europeu.",
+      "fonte": "BCE, via The Northern Miner",
+      "url": "https://www.northernminer.com/news/gold-overtakes-us-treasuries-in-global-reserve-shift-ecb/1003891748/"
+    },
+    {
+      "data": "2026-03-31",
+      "tipo": "noticia",
+      "titulo": "Banco Central do Brasil dobra a fatia de ouro nas reservas",
+      "resumo": "O ouro passou de 3,55% das reservas internacionais do país em 2024 para 7,19% em 2025.",
+      "fonte": "Banco Central do Brasil, Relatório de Gestão das Reservas Internacionais",
+      "url": "https://www.bcb.gov.br/content/publicacoes/relgestaoreservas/GESTAORESERVAS202603-relatorio_anual_reservas_internacionais_2026.pdf",
+      "data_texto": "mar. 2026"
+    }
+  ]
+}

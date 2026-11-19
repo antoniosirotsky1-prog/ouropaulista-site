@@ -33,7 +33,10 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 ## Home (`index.html`, `home.js`) e arte da reserva (`fluxo.js`)
 
 - Capa: barra em 3D feita com as imagens `assets/barra-*.webp`, que gira ao trocar o peso. O Reservar anima a barra virando blister e caixa e só então abre `/comprar.html?barra=N`. O preço continua vindo de `precos.json` em `#pick-price`.
-- Ordem da home: capa, como comprar, código de 5%, por que ouro, dúvidas, história e fecho. A história fica no fim da página.
+- Ordem da home: capa, como comprar, blog, dúvidas, história e fecho. A história fica no fim da página.
+- Roleta (`#codigo`): não é seção. É um banner de entrada sobre a página, aberto na primeira visita (guarda `op_gate` no navegador para não repetir) e pelos links `/#codigo`. Sem JavaScript ele não aparece.
+- Passos de como comprar: cada passo tem uma aquarela em `assets/passos/passo-N.webp` e o traço dela em `assets/passos/ol-passo-N.json`; ao entrar na tela o traço se desenha e a aquarela aparece.
+- Blog: os posts ficam em `blog.json` (`data`, `tipo` "noticia" ou "post", `titulo`, `resumo`, `fonte`, `url`, e opcionais `img` e `data_texto`). `blog.js` preenche a seção da home (3 mais recentes) e `blog.html` (todos). Os três primeiros da home e a lista de `blog.html` também estão escritos no HTML, para quem está sem JavaScript; ao acrescentar um post, edite o `blog.json` e, se quiser manter esse HTML em dia, copie o cartão. Notícia sempre com fonte e link; nada de promessa de resultado.
 - Barra fixa de compra (`.buybar`): aparece em todas as páginas menos na reserva. Na home ela surge quando o botão Reservar da capa sai da tela e acompanha o peso e o preço escolhidos.
 - História (`#fio`): cenas em sketch (`assets/fio/ol-*.json`, traços vetoriais desenhados conforme a rolagem) que se pintam em aquarela (`assets/fio/aq-*.webp`). Título e legenda de cada época ficam na lista `CH` de `home.js`. No fim, todas as cenas viram um quadro.
 - `fluxo.js` desenha, só no computador, a barra girando e o cartão "Sua reserva" ao lado do formulário. Ele lê os campos, não grava nem envia nada. O envio continua em `comprar.js`.
