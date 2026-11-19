@@ -25,11 +25,22 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 ```
 
 - `barras`: preço final em reais de cada barra (chave = gramas), já com o acréscimo da Ouro Paulista. Aparece nos cartões da loja e no primeiro passo de `/comprar.html`, sempre como "preço de referência", com data e hora.
-- Sobrepreço da Ouro Paulista (regra do Antonio de 19/11/2026): 17% na barra de 1 g, 15% na de 5 g, 13% na de 10 g, 10% na de 25 g, 8% na de 50 g e 6% na de 100 g, sobre o custo da barra. Fica em `SOBREPRECO`, em `tools/precos.mjs`. O acréscimo de 5% sem código, nas barras de até 10 g, entra por cima.
+- Sobrepreço da Ouro Paulista (regra do Antonio de 19/11/2026): 17% na barra de 1 g, 15% na de 5 g, 13% na de 10 g, 10% na de 25 g, 8% na de 50 g e 6% na de 100 g, sobre o custo da barra. Fica em `SOBREPRECO`, em `tools/precos.mjs`. Nas barras de até 10 g, esse é o preço com 5% de desconto; o preço cheio, sem código, é ele dividido por 0,95.
 - Quem gera: `tools/precos.mjs`, rodado pelo GitHub Actions (`.github/workflows/precos.yml`) três vezes por dia útil e uma vez no fim de semana. Também roda à mão em Actions → Preço de referência → Run workflow.
 - Conta: paridade pública do ouro (onça em dólar × dólar em reais ÷ 31,10) × fator da barra × gramas. As cotações vêm de fontes públicas: onça em gold-api.com; dólar em AwesomeAPI e, se ela não responder, em DolarAPI, no último boletim PTAX do Banco Central e em open.er-api.com, nessa ordem.
 - Nunca gravar neste repositório dado lido do sistema interno da instituição parceira: o repositório é público.
 - Se uma fonte falhar ou o preço variar mais de 8% de uma vez, o arquivo não é atualizado. Depois de 36 horas sem atualização o site volta a dizer que o preço é informado na reserva.
+
+## Textos do site
+
+Estudo de copy de 19/11/2026 no Drive (`05 V1 Comercial/03 Site/2026-11-19_ESTUDO-copy-do-site.md`). Regras para qualquer texto novo:
+
+- Frase curta, afirmativa e concreta, falando com "você". Número e fato antes de adjetivo.
+- Nunca prometer rendimento nem resultado.
+- "5% de desconto", nunca acréscimo ou sobretaxa.
+- Papéis sempre claros: quem vende, recebe e emite a nota é a instituição autorizada; a Ouro Paulista não recebe dinheiro nem guarda ouro.
+- Um chamado só: "Compre Ouro Paulista" e "Reservar". Assinatura da capa: "Segurança em barra." Lema: "Ouro de São Paulo para o seu bem."
+- Linha do tempo: título de até sete palavras, no presente, e legenda de até duas frases com um fato datado.
 
 ## Home (`index.html`, `home.js`) e arte da reserva (`fluxo.js`)
 
@@ -47,7 +58,7 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 
 ## Código de primeira compra e indicação (`codigo.js`)
 
-- Regra de preço: barras de 1, 5 e 10 g têm acréscimo de 5% no preço de referência. Com código válido, na primeira compra de cada CPF, o acréscimo não é cobrado. `precos.json` traz as duas tabelas: `barras` (preço de tabela) e `com_codigo` (1, 5 e 10 g sem o acréscimo). A conta fica em `tools/precos.mjs`.
+- Regra de preço: barras de 1, 5 e 10 g têm um preço cheio (`barras`) e um preço com 5% de desconto (`com_codigo`), que vale com código válido na primeira compra de cada CPF. O preço cheio é o preço com desconto dividido por 0,95. A conta fica em `tools/precos.mjs`. Nos textos do site é sempre "5% de desconto", nunca acréscimo ou sobretaxa.
 - Código geral: `PAULISTA5`, igual para todo mundo. É o resultado de 5% da roda. Os resultados de 10%, 15% e barra têm código próprio (`D10`, `D15`, `B1G` + 5 caracteres + dígito), sorteado e registrado no banco.
 - Código de indicação: gerado no fim da reserva (`OP` + 6 primeiros caracteres do protocolo + 1 dígito de conferência). Dá ao indicado o mesmo desconto. Se a primeira compra do indicado somar 50 g ou mais, quem indicou ganha uma barra de 1 g na sua segunda compra.
 - Onde fica gravado: no campo `origem` do cadastro, em `codigo` (o código usado) e `indicacao` (o código de indicação de quem reservou). Para achar quem indicou, procurar em `cadastros` a linha cujo `origem->>indicacao` é igual ao `origem->>codigo` do indicado.

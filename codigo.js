@@ -1,6 +1,6 @@
 /* Código de primeira compra e código de indicação.
-   Regra: barras de 1, 5 e 10 g têm acréscimo de 5% no preço de referência. Com código válido, na primeira compra,
-   o acréscimo não é cobrado (código de 5%).
+   Regra: barras de 1, 5 e 10 g têm um preço cheio e um preço com 5% de desconto. O desconto vale com código válido,
+   na primeira compra. No site, falar sempre em "5% de desconto", nunca em acréscimo ou sobretaxa.
    A roda da home sorteia, por decisão do Antonio em 19/11/2026: 5% (quase sempre), 10%, 15% ou uma barra de 1 g.
    As chances estão em CHANCES, abaixo, e são as mesmas publicadas nas regras do site: se mudar aqui, mude lá.
    O sorteio é feito no banco (função girar, backend/roleta.sql), que registra nome, e-mail, prêmio e código.
@@ -65,7 +65,7 @@
       });
     }).catch(function () { clearTimeout(tm); return { premio: '5', codigo: GERAL }; });
   }
-  function rotulo(c) { var d = desconto(c); return !d ? '' : d.barra ? 'uma barra de 1 g' : d.pct + '% a menos'; }
+  function rotulo(c) { var d = desconto(c); return !d ? '' : d.barra ? 'uma barra de 1 g' : d.pct + '% de desconto'; }
   function gerar(id) { var b = 'OP' + String(id || '').replace(/[^0-9a-f]/gi, '').slice(0, 6).toUpperCase(); return b.length === 8 ? b + digito(b) : ''; }
   function get() { try { var c = localStorage.getItem('op_codigo'); return valido(c) ? limpa(c) : ''; } catch (e) { return ''; } }
   function set(c) { try { if (valido(c)) localStorage.setItem('op_codigo', limpa(c)); } catch (e) {} }
