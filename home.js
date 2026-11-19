@@ -263,7 +263,7 @@
       var nmv = fn ? fn.value.trim() : '', eml = fe ? fe.value.trim() : '';
       got = true; go.classList.add('off');
       /* o sorteio é feito no banco (backend/roleta.sql) e fica registrado com nome e e-mail */
-      COD.girar(nmv, eml).then(function (res) {
+      (COD.girar ? COD.girar(nmv, eml) : Promise.resolve({ premio: '5', codigo: COD.GERAL })).then(function (res) {
         var fim = function () { COD.set(res.codigo); reveal(); };
         if (!LIVE) { fim(); return; }
         if (idle) idle.kill();
