@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Reservar ouro | Ouro Paulista</title>
-<meta name="description" content="Reserve a sua barra de ouro 999,9 em poucos passos. Cadastro, pagamento e nota fiscal com instituição autorizada pelo Banco Central.">
+<meta name="description" content="Reserve a sua barra de ouro 999 em poucos passos. Cadastro, pagamento e nota fiscal com instituição autorizada pelo Banco Central.">
 <meta name="robots" content="noindex">
 <meta name="referrer" content="strict-origin">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' blob: data:; connect-src 'self' https://*.supabase.co https://viacep.com.br; form-action 'none'; base-uri 'none'">
@@ -15,7 +15,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Ouro Paulista">
 <meta property="og:title" content="Reservar ouro | Ouro Paulista">
-<meta property="og:description" content="Reserve a sua barra de ouro 999,9 em poucos passos.">
+<meta property="og:description" content="Reserve a sua barra de ouro 999 em poucos passos.">
 <meta property="og:url" content="https://ouropaulista.com/comprar.html">
 <meta property="og:image" content="https://ouropaulista.com/og.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
@@ -196,13 +196,14 @@ fieldset{border:0;min-width:0}
 
     <section class="step" data-step="barra" data-phase="0">
       <h1 tabindex="-1">Qual barra você quer reservar?</h1>
-      <p class="lead">Ouro 999,9, lacrado e numerado. O valor do dia é confirmado antes do pagamento.</p>
+      <p class="lead">Ouro 999, lacrado e numerado. O valor do dia é confirmado antes do pagamento.</p>
       <fieldset><legend class="vh">Peso da barra</legend>
         <div class="weights" id="weights"></div>
       </fieldset>
       <div class="qty"><span id="qty-l">Quantidade</span>
         <span class="ctl" role="group" aria-labelledby="qty-l"><button type="button" id="q-less" aria-label="Diminuir quantidade">−</button><output id="q-out" aria-live="polite">1</output><button type="button" id="q-more" aria-label="Aumentar quantidade">+</button></span>
       </div>
+      <p class="hint" id="preco" style="margin-top:16px" hidden></p>
       <p class="hint" id="limit-note" style="margin-top:16px" hidden>Para compras acima de R$ 10.000 por ano, a instituição pode pedir documentos adicionais.</p>
       <div class="actions"><button class="btn btn-primary" type="button" data-next>Continuar</button></div>
     </section>

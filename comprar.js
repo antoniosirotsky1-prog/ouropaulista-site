@@ -44,7 +44,7 @@
     var l = document.createElement('label');
     var i = document.createElement('input'); i.type = 'radio'; i.name = 'barra'; i.value = g; i.checked = g === st.barra;
     var s = document.createElement('strong'); s.textContent = g + ' g';
-    var d = document.createElement('span'); d.textContent = 'Ouro 999,9';
+    var d = document.createElement('span'); d.textContent = 'Ouro 999';
     l.appendChild(i); l.appendChild(s); l.appendChild(d); $('weights').appendChild(l);
     i.addEventListener('change', function () { st.barra = g; paintBarra(); });
   });
@@ -55,8 +55,20 @@
     $('q-out').textContent = st.qtd;
     $('bar-w').textContent = st.barra + ' g';
     $('limit-note').hidden = st.barra * st.qtd < 15;
+    var v = PRECOS && Number(PRECOS.barras[st.barra]);
+    $('preco').hidden = !(v > 0);
+    if (v > 0) $('preco').textContent = 'Preço de referência: ' + BRL.format(v * st.qtd) + ' (' + PRECOS.quando + '). O valor final é confirmado antes do pagamento.';
   }
+  var PRECOS = null, BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   paintBarra();
+  /* Preço de referência do dia, lido de /precos.json. Sem arquivo, ou com mais de 36 h, a página fica sem preço. */
+  fetch('/precos.json', { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.atualizado_em || !d.barras) return;
+    var t = new Date(d.atualizado_em);
+    if (isNaN(t) || Date.now() - t.getTime() > 36 * 3600 * 1000) return;
+    PRECOS = { barras: d.barras, quando: t.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) };
+    paintBarra();
+  }).catch(function () {});
 
   /* ---------- máscaras ---------- */
   $('cpf').addEventListener('input', function (e) {
@@ -214,7 +226,7 @@
   function endereco() { return val('rua') + ', ' + val('num') + (val('comp') ? ', ' + val('comp') : '') + ' · ' + val('bairro') + ' · ' + val('cidade') + '/' + $('uf').value + ' · CEP ' + val('cep'); }
   function paintReview() {
     var rows = [
-      ['Barra', st.qtd + ' × ' + st.barra + ' g, ouro 999,9', 'barra'],
+      ['Barra', st.qtd + ' × ' + st.barra + ' g, ouro 999', 'barra'],
       ['Nome', val('nome'), 'nome'], ['CPF', val('cpf'), 'nome'],
       ['Perfil', nascBR() + ' · ' + val('prof') + ($('pep').checked ? ' · pessoa exposta politicamente' : ''), 'perfil'],
       ['Contato', val('cel') + ' · ' + val('email'), 'contato'],
