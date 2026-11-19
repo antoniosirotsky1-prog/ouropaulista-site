@@ -1,0 +1,33 @@
+name: Preço de referência
+
+on:
+  schedule:
+    - cron: '15 12,15,18 * * 1-5'   # 9h15, 12h15 e 15h15 em São Paulo, de segunda a sexta
+    - cron: '15 13 * * 0,6'         # 10h15 em São Paulo, sábado e domingo
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: precos
+  cancel-in-progress: false
+
+jobs:
+  precos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/precos.mjs
+      - name: Publicar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add precos.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Preço de referência do dia"
+          git push
