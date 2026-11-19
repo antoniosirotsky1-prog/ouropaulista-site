@@ -41,6 +41,14 @@
     var v = qs.get(k); if (v) origem[k] = v.slice(0, 80);
   });
   try { if (document.referrer) origem.referrer = new URL(document.referrer).hostname; } catch (e) {}
+  /* código de primeira compra ou de indicação (ver /codigo.js): tira o acréscimo de 5% das barras de até 10 g */
+  var COD = window.OP_CODIGO || null;
+  function codigo() { var c = $('codigo') ? $('codigo').value : ''; return COD && COD.valido(c) ? COD.limpa(c) : ''; }
+  function unit() { if (!PRECOS) return 0; return COD ? COD.preco(PRECOS, st.barra, codigo()) : Number(PRECOS.barras[st.barra]); }
+  if ($('codigo')) {
+    $('codigo').value = COD ? COD.limpa(qs.get('codigo') || COD.get()) : '';
+    $('codigo').addEventListener('input', function () { paintBarra(); });
+  }
 
   PESOS.forEach(function (g) {
     var l = document.createElement('label');
@@ -64,8 +72,15 @@
     im.classList.toggle('now', byKey || RM.matches);
     im.src = '/assets/barra-' + st.barra + 'g.webp';
     im.style.transform = 'scale(' + K[st.barra] + ')';
-    var v = PRECOS && Number(PRECOS.barras[st.barra]);
+    var v = unit();
     $('preco').hidden = !(v > 0);
+    if ($('codigo-nota')) {
+      var digitado = $('codigo').value.trim(), ok = !!codigo(), pequeno = st.barra <= 10;
+      $('codigo-nota').textContent = !digitado ? (pequeno ? 'Com código, as barras de 1, 5 e 10 g saem 5% mais baratas na primeira compra.' : '')
+        : !ok ? 'Código não reconhecido. Confira as letras e os números.'
+        : pequeno ? 'Código aplicado: 5% a menos nesta barra. Vale para a primeira compra e é conferido antes do pagamento.'
+        : 'Código anotado. O desconto vale para barras de 1, 5 e 10 g.';
+    }
     if (v > 0) $('preco').textContent = 'Preço de referência: ' + BRL.format(v * st.qtd) + ' (' + PRECOS.quando + '). O frete é calculado pelo CEP, no passo de entrega. O valor final é confirmado antes do pagamento.';
   }
   var PRECOS = null, BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -78,7 +93,7 @@
     if (!d || !d.atualizado_em || !d.barras) return;
     var t = new Date(d.atualizado_em);
     if (isNaN(t) || Date.now() - t.getTime() > 36 * 3600 * 1000) return;
-    PRECOS = { barras: d.barras, quando: t.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) };
+    PRECOS = { barras: d.barras, com_codigo: d.com_codigo || null, quando: t.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) };
     paintBarra();
   }).catch(function () {});
 
@@ -87,7 +102,7 @@
   /* Opções para a barra e o endereço atuais, com a escolha em vigor. Sem frete.js, devolve null. */
   function entrega() {
     if (!window.OP_FRETE) return null;
-    var r = window.OP_FRETE.calcular({ uf: $('uf').value, cidade: $('cidade').value, unit: PRECOS ? Number(PRECOS.barras[st.barra]) : 0, qtd: st.qtd });
+    var r = window.OP_FRETE.calcular({ uf: $('uf').value, cidade: $('cidade').value, unit: unit(), qtd: st.qtd });
     var ok = r.opcoes.filter(function (o) { return o.ok; });
     r.sel = ok.filter(function (o) { return o.id === st.entrega; })[0] || ok[0];
     st.entrega = r.sel.id;
@@ -387,6 +402,7 @@
     });
     return chain.then(function () {
       status('Registrando o pedido.');
+      if (COD) { if (codigo()) origem.codigo = codigo(); origem.indicacao = COD.gerar(id); }
       return api('/rest/v1/cadastros', {
         method: 'POST', headers: { 'Content-Type': 'application/json', Prefer: 'return=minimal' },
         body: JSON.stringify({
@@ -401,8 +417,8 @@
   }
   function textoWhats() {
     return ['Olá. Quero reservar ouro físico da Ouro Paulista.', '',
-      'Barra: ' + st.qtd + ' × ' + st.barra + ' g', 'Nome: ' + val('nome'), 'CPF: ' + val('cpf'), 'Nascimento: ' + nascBR(), 'Profissão: ' + val('prof'),
-      'Celular: ' + val('cel'), 'E-mail: ' + val('email'), 'Endereço: ' + endereco()].concat(entrega() ? ['Entrega: ' + entregaTxt()] : []).concat([
+      'Barra: ' + st.qtd + ' × ' + st.barra + ' g'].concat(codigo() ? ['Código: ' + codigo()] : []).concat(['Nome: ' + val('nome'), 'CPF: ' + val('cpf'), 'Nascimento: ' + nascBR(), 'Profissão: ' + val('prof'),
+      'Celular: ' + val('cel'), 'E-mail: ' + val('email'), 'Endereço: ' + endereco()]).concat(entrega() ? ['Entrega: ' + entregaTxt()] : []).concat([
       'Pessoa exposta politicamente: ' + ($('pep').checked ? 'sim' : 'não'), '',
       'Autorizo o envio destes dados à instituição autorizada pelo Banco Central para análise do cadastro.',
       'Envio a seguir a foto do documento de identidade e do comprovante de endereço.']).join('\n');
@@ -420,6 +436,8 @@
     if (ONLINE) { $('wa-end').textContent = 'Confirmar pelo WhatsApp'; $('wa-hint').hidden = false; }
     if (st.entrega === 'retirada') $('fim-entrega').textContent = 'Você retira a barra em São Paulo, com horário marcado e nota fiscal em seu nome.';
     else if (st.entrega === 'portador') $('fim-entrega').textContent = 'A barra é entregue por portador no seu endereço, com nota fiscal em seu nome.';
+    var meu = COD && ONLINE ? COD.gerar(id) : '';
+    if (meu && $('indique')) { $('indique-cod').textContent = meu; $('indique').hidden = false; }
     show(steps.length - 1);
     try { history.replaceState({ i: cur }, ''); } catch (e) {}
   }

@@ -29,6 +29,8 @@
     }
   }
 
+  if (window.opPreco) window.opPreco();
+
   /* ---------- capa ---------- */
   var pk = $('pick'), bar = $('hx-bar'), flt = $('hx-float');
   if (pk && flt) {
@@ -61,7 +63,9 @@
       var g = a.getAttribute('data-g');
       as.forEach(function (x) { x.setAttribute('aria-pressed', x === a ? 'true' : 'false'); });
       $('pick-l').textContent = g + ' g';
-      $('pick-go').href = '/comprar.html?barra=' + g;
+      var cg = window.OP_CODIGO ? window.OP_CODIGO.get() : '';
+      $('pick-go').href = '/comprar.html?barra=' + g + (cg ? '&codigo=' + cg : '');
+      if ($('cod-go') && cg) $('cod-go').href = '/comprar.html?barra=' + g + '&codigo=' + cg;
       pk.setAttribute('data-sel', g); if (window.opPreco) window.opPreco();
       if (LIVE && g !== cur) {
         back.src = src(g); turn += 540;
@@ -126,6 +130,56 @@
       });
     }
   }
+
+  /* ---------- código de primeira compra: a roda sempre dá o mesmo código (não é sorteio) ---------- */
+  (function () {
+    var COD = window.OP_CODIGO, w = $('cod-wheel'), go = $('cod-go');
+    if (!COD || !w || !go) return;
+    var n = 12, A = Math.PI * 2 / n, got = false;
+    var el = function (t, a, p) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); (p || w).appendChild(e); return e; };
+    el('circle', { r: 198, fill: '#111' });
+    for (var i = 0; i < n; i++) {
+      var a = i * A - A / 2, b = a + A, r0 = 44, r1 = 190;
+      el('path', { d: 'M' + Math.cos(a) * r1 + ' ' + Math.sin(a) * r1 + 'A' + r1 + ' ' + r1 + ' 0 0 1 ' + Math.cos(b) * r1 + ' ' + Math.sin(b) * r1 + 'L' + Math.cos(b) * r0 + ' ' + Math.sin(b) * r0 + 'A' + r0 + ' ' + r0 + ' 0 0 0 ' + Math.cos(a) * r0 + ' ' + Math.sin(a) * r0 + 'Z', fill: i % 2 ? '#ffffff' : '#f3efe4', stroke: '#111', 'stroke-width': .5 });
+      el('circle', { cx: Math.cos(a) * 194, cy: Math.sin(a) * 194, r: 2, fill: '#f3efe4' });
+      var g = el('g', { transform: 'rotate(' + (i * 30) + ')' });
+      var t = el('text', { x: 176, y: 9, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 800, 'font-size': 26, 'letter-spacing': '-.02em', fill: '#111' }, g); t.textContent = '5%';
+      var t2 = el('text', { x: 122, y: 4, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 700, 'font-size': 10, 'letter-spacing': '.14em', fill: '#111' }, g); t2.textContent = 'A MENOS';
+    }
+    el('circle', { r: 44, fill: '#d4a017', stroke: '#111', 'stroke-width': 3 });
+    var hub = el('text', { y: 8, 'text-anchor': 'middle', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 800, 'font-size': 24, 'letter-spacing': '-.02em', fill: '#111' }); hub.textContent = 'OURO';
+    var idle = LIVE ? G.to(w, { rotation: '+=360', duration: 40, ease: 'none', repeat: -1, transformOrigin: '50% 50%' }) : null;
+    function reveal() {
+      got = true; COD.set(COD.GERAL);
+      $('h-cod').innerHTML = 'Seu código: <em>5% a menos</em>.';
+      $('cod-sub').textContent = 'Vale para a primeira barra de 1, 5 ou 10 g. Ele já está aplicado no preço desta página.';
+      $('cod-out').hidden = false; go.textContent = 'Usar meu código';
+      var sel = pk ? pk.getAttribute('data-sel') || '10' : '10';
+      go.href = '/comprar.html?barra=' + sel + '&codigo=' + COD.GERAL;
+      if ($('pick-go')) $('pick-go').href = '/comprar.html?barra=' + sel + '&codigo=' + COD.GERAL;
+      if (window.opPreco) window.opPreco();
+    }
+    function coins() {
+      var z = $('cod-wz'), r = z.getBoundingClientRect(), cx = r.width / 2, cy = r.height / 2;
+      for (var i = 0; i < 40; i++) (function () {
+        var c = document.createElement('i'); c.className = 'cod-coin'; z.appendChild(c);
+        var sz = 12 + Math.random() * 14, ang = -Math.PI / 2 + (Math.random() - .5) * 2.6, v = r.width * (.35 + Math.random() * .5);
+        G.set(c, { x: cx, y: cy, width: sz, height: sz, opacity: 1 });
+        G.to(c, { x: cx + Math.cos(ang) * v, duration: 1.7, ease: 'power1.out' });
+        G.to(c, { y: cy + Math.sin(ang) * v * .8, duration: .55, ease: 'power2.out', onComplete: function () { G.to(c, { y: r.height + 80, opacity: 0, duration: 1.1, ease: 'power2.in', onComplete: function () { c.remove(); } }); } });
+        G.to(c, { scaleX: .12, duration: .16 + Math.random() * .12, ease: 'sine.inOut', yoyo: true, repeat: 9 });
+      })();
+    }
+    if (COD.get()) reveal();
+    go.addEventListener('click', function (e) {
+      if (got || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+      e.preventDefault();
+      if (!LIVE) { reveal(); return; }
+      got = true; if (idle) idle.kill();
+      var now = G.getProperty(w, 'rotation') % 360; G.set(w, { rotation: now });
+      G.to(w, { rotation: now + 360 * 4 + (360 - now % 30) - 90, duration: 4.2, ease: 'power4.out', onComplete: function () { coins(); reveal(); } });
+    });
+  })();
 
   /* ---------- a história ---------- */
   var fio = $('fio');

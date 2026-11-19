@@ -36,3 +36,11 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 - História (`#fio`): cenas em sketch (`assets/fio/ol-*.json`, traços vetoriais desenhados conforme a rolagem) que se pintam em aquarela (`assets/fio/aq-*.webp`). Título e legenda de cada época ficam na lista `CH` de `home.js`. No fim, todas as cenas viram um quadro.
 - `fluxo.js` desenha, só no computador, a barra girando e o cartão "Sua reserva" ao lado do formulário. Ele lê os campos, não grava nem envia nada. O envio continua em `comprar.js`.
 - Bibliotecas em `assets/v/` (GSAP, ScrollTrigger, Lenis). Sem JavaScript, sem GSAP ou com movimento reduzido, a página funciona parada: os pesos trocam a imagem, o Reservar leva direto à reserva e a história aparece como quadro.
+
+## Código de primeira compra e indicação (`codigo.js`)
+
+- Regra de preço: barras de 1, 5 e 10 g têm acréscimo de 5% no preço de referência. Com código válido, na primeira compra de cada CPF, o acréscimo não é cobrado. `precos.json` traz as duas tabelas: `barras` (preço de tabela) e `com_codigo` (1, 5 e 10 g sem o acréscimo). A conta fica em `tools/precos.mjs`.
+- Código geral: `PAULISTA5`, igual para todo mundo. A roda da home (`#codigo`) sempre entrega esse mesmo código. Não há sorteio nem prêmio que dependa de sorte, por isso não há pedido de autorização de promoção.
+- Código de indicação: gerado no fim da reserva (`OP` + 6 primeiros caracteres do protocolo + 1 dígito de conferência). Dá ao indicado o mesmo desconto. Se a primeira compra do indicado somar 50 g ou mais, quem indicou ganha uma barra de 1 g na sua segunda compra.
+- Onde fica gravado: no campo `origem` do cadastro, em `codigo` (o código usado) e `indicacao` (o código de indicação de quem reservou). Para achar quem indicou, procurar em `cadastros` a linha cujo `origem->>indicacao` é igual ao `origem->>codigo` do indicado.
+- O site só confere o formato do código. Primeira compra, indicação válida e entrega da barra de 1 g são conferidas no atendimento, antes do pagamento.

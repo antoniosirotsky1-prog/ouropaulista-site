@@ -453,6 +453,34 @@ p,li,dd{text-wrap:pretty}
   .hx-box{width:470px;margin:-194px 0 0 -235px}
 }
 
+/* código de primeira compra: roda sem sorteio (todo giro dá o mesmo código) */
+.cod{position:relative;border-top:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1fr);gap:40px;padding:72px 24px;overflow:hidden;scroll-margin-top:72px}
+.cod-l{max-width:560px;position:relative;z-index:2}
+.cod h2{margin-top:12px;font-family:var(--d);font-weight:800;text-transform:uppercase;font-size:clamp(40px,6.4vw,76px);line-height:.96;letter-spacing:-0.035em}
+.cod h2 em{font-style:normal;color:var(--gold)}
+.cod-sub{margin-top:20px;font-size:18px;line-height:28px;color:var(--ink-2);max-width:460px}
+.cod-out{margin-top:24px;padding:14px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);max-width:400px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px}
+.cod-out[hidden]{display:none}
+.cod-out b{font:800 32px/1 var(--d);letter-spacing:.08em;user-select:all}
+.cod-out span{font-size:13px;line-height:20px;color:var(--ink-2)}
+.cod .btn{margin-top:24px;min-height:52px;padding:12px 28px;min-width:min(400px,100%)}
+.cod-ind{margin-top:40px;display:grid;grid-template-columns:56px 1fr;gap:20px;align-items:start;padding:20px;border:1px solid var(--gold);max-width:520px}
+.cod-ind img{width:56px;height:auto}
+.cod-ind h3{font:700 18px/24px var(--d);letter-spacing:-0.01em}
+.cod-ind p{margin-top:6px;font-size:14px;line-height:20px;color:var(--ink-2)}
+.cod-reg{margin-top:20px;max-width:520px;font-size:13px;line-height:20px;color:var(--ink-2)}
+.cod-reg summary{cursor:pointer;display:inline-block;border-bottom:1px solid var(--rule);list-style:none;padding:6px 0}
+.cod-reg summary::-webkit-details-marker{display:none}
+.cod-reg p{margin-top:10px}
+.cod-wz{position:relative;width:min(72vw,380px);aspect-ratio:1;margin:0 auto;order:-1}
+.cod-wheel{width:100%;height:100%;display:block;will-change:transform}
+.cod-ptr{position:absolute;left:50%;top:-10px;width:28px;height:34px;margin-left:-14px;z-index:2;fill:var(--ink)}
+.cod-coin{position:absolute;left:0;top:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3b0,#e9c555 38%,#d4a017 62%,#a87a08);box-shadow:inset 0 0 0 2px rgba(120,85,0,.45);z-index:3;pointer-events:none;opacity:0}
+@media (min-width:961px){
+  .cod{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);align-items:center;padding:96px max(24px,calc((100vw - 1200px)/2 + 24px))}
+  .cod-wz{width:min(44vw,600px);margin:0 0 0 auto;order:0}
+}
+
 /* a história: sketch que vira aquarela */
 .fio{position:relative;border-top:1px solid var(--rule);padding:72px 24px;overflow:hidden}
 .fio-head h2{margin-top:12px;font-size:clamp(24px,3.2vw,40px);line-height:1.1;letter-spacing:-0.015em}
@@ -780,6 +808,25 @@ html.lenis{scroll-behavior:auto!important}
     <a class="fio-skip" href="#por-que">Pular a história</a>
   </section>
 
+  <section class="cod" id="codigo" aria-labelledby="h-cod">
+    <div class="cod-l">
+      <p class="label">Código de primeira compra</p>
+      <h2 id="h-cod">Gire e pegue <em>5% a menos</em>.</h2>
+      <p class="cod-sub" id="cod-sub">Todo giro dá o mesmo código: 5% a menos na primeira barra de 1, 5 ou 10 g. Não é sorteio, todo mundo ganha.</p>
+      <p class="cod-out" id="cod-out" hidden><b>PAULISTA5</b><span>barras de 1, 5 e 10 g, na primeira compra</span></p>
+      <a class="btn btn-primary" id="cod-go" href="/comprar.html?barra=10&amp;codigo=PAULISTA5">Girar</a>
+      <div class="cod-ind">
+        <img src="/assets/barra-1g.webp" alt="" width="464" height="640" loading="lazy" decoding="async">
+        <div><h3>Prêmio especial: uma barra de 1 g</h3>
+        <p>No fim da primeira compra você recebe um código de indicação. Quando alguém indicado por você fizer a primeira compra somando 50 g ou mais, você ganha uma barra de 1 g na sua segunda compra.</p></div>
+      </div>
+      <details class="cod-reg"><summary>Regras</summary>
+        <p>As barras de 1, 5 e 10 g têm acréscimo de 5% no preço de referência. Com o código, na primeira compra de cada CPF, esse acréscimo não é cobrado. O código de indicação dá o mesmo desconto a quem for indicado. A barra de 1 g é entregue a quem indicou junto com a sua segunda compra, depois de paga a primeira compra do indicado, de 50 g ou mais. Uma barra por indicado. Nada aqui depende de sorte. A conferência é feita no atendimento, antes do pagamento.</p>
+      </details>
+    </div>
+    <div class="cod-wz" id="cod-wz" aria-hidden="true"><svg class="cod-ptr" viewBox="0 0 28 34"><path d="M14 34L1 6a14 14 0 0 1 26 0z"/></svg><svg class="cod-wheel" id="cod-wheel" viewBox="-200 -200 400 400"></svg></div>
+  </section>
+
   <section class="section" id="por-que" aria-labelledby="h-porque" style="background:var(--surface)">
     <div class="wrap">
       <div class="sec-head">
@@ -969,10 +1016,12 @@ html.lenis{scroll-behavior:auto!important}
     var pp=document.getElementById('pick-price'),pk=document.getElementById('pick');
     if(!pp||!pk)return;
     window.opPreco=function(){
-      var v=Number(d.barras[pk.getAttribute('data-sel')||'10']),ok=isFinite(v)&&v>0;
+      var C=window.OP_CODIGO,g=pk.getAttribute('data-sel')||'10',cod=C?C.get():'',cheio=Number(d.barras[g]);
+      var v=C?C.preco(d,g,cod):cheio,ok=isFinite(v)&&v>0;
       pp.hidden=!ok;if(!ok)return;
       pp.firstChild.textContent=fmt.format(v);
-      pp.lastChild.textContent='Preço de referência em '+quando+'. O frete é calculado pelo CEP na reserva. O valor final é confirmado antes do pagamento.';
+      var extra=d.com_codigo&&d.com_codigo[g]?(v<cheio?' Com o código '+cod+', 5% a menos na primeira compra. Sem código, '+fmt.format(cheio)+'.':' Com código, 5% a menos na primeira compra.'):'';
+      pp.lastChild.textContent='Preço de referência em '+quando+'.'+extra+' O frete é calculado pelo CEP na reserva. O valor final é confirmado antes do pagamento.';
     };
     window.opPreco();
     document.querySelectorAll('[data-sem-preco]').forEach(function(e){e.hidden=true});
@@ -981,6 +1030,7 @@ html.lenis{scroll-behavior:auto!important}
 <script src="/assets/v/gsap.min.js" defer></script>
 <script src="/assets/v/ScrollTrigger.min.js" defer></script>
 <script src="/assets/v/lenis.min.js" defer></script>
+<script src="/codigo.js" defer></script>
 <script src="/home.js" defer></script>
 <script src="/config.js" defer></script>
 <script src="/medir.js" defer></script>
