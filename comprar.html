@@ -93,6 +93,9 @@ fieldset{border:0;min-width:0}
 .fld.h{grid-column:span 3}.fld.t{grid-column:span 2}.fld.q{grid-column:span 4}
 @media (max-width:520px){.fld.h,.fld.q{grid-column:span 6}.fld.t{grid-column:span 3}}
 .fld label{font-size:14px;line-height:20px;font-weight:500}
+.fld.cod-mini label{font-size:11px;line-height:16px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.fld.cod-mini input{min-height:36px;padding:6px 10px;font-size:13px;line-height:20px;letter-spacing:.08em}
+#codigo-nota{font-size:12px;line-height:16px}
 .fld input,.fld select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--rule);border-radius:0;padding:11px 12px;min-height:48px;width:100%;transition:border-color 200ms ease}
 .fld input:focus-visible,.fld select:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
 .fld input[aria-invalid="true"]{border-color:var(--ink);box-shadow:inset 3px 0 0 var(--ink),inset 0 -2px 0 var(--ink)}
@@ -262,7 +265,7 @@ fieldset{border:0;min-width:0}
       <div class="qty"><span id="qty-l">Quantidade</span>
         <span class="ctl" role="group" aria-labelledby="qty-l"><button type="button" id="q-less" aria-label="Diminuir quantidade">−</button><output id="q-out" aria-live="polite">1</output><button type="button" id="q-more" aria-label="Aumentar quantidade">+</button></span>
       </div>
-      <div class="fld" style="margin-top:20px;max-width:280px"><label for="codigo">Código, se tiver</label><input id="codigo" name="codigo" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" aria-describedby="codigo-nota"></div>
+      <div class="fld cod-mini" style="margin-top:16px;max-width:170px"><label for="codigo">Código</label><input id="codigo" name="codigo" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" aria-describedby="codigo-nota"></div>
       <p class="hint" id="codigo-nota" style="margin-top:8px" aria-live="polite"></p>
       <p class="hint" id="preco" style="margin-top:16px" hidden></p>
       <p class="hint" id="limit-note" style="margin-top:16px">Para compras acima de R$ 10.000 por ano, a instituição pode pedir documentos adicionais.</p>

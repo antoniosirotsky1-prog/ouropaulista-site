@@ -163,7 +163,7 @@
       if (!gate.hidden) return;
       last = document.activeElement; gate.hidden = false; document.documentElement.classList.add('gate-on');
       if (LIVE) { G.fromTo(gate, { opacity: 0 }, { opacity: 1, duration: .25, ease: 'power1.out' }); G.fromTo(box, { y: 28, scale: .97 }, { y: 0, scale: 1, duration: .45, ease: 'power3.out' }); }
-      var b = $('cod-go'); if (b) try { b.focus({ preventScroll: true }); } catch (e) {}
+      var b = $('g-nome'); if (!b || b.offsetParent === null) b = $('cod-go'); if (b) try { b.focus({ preventScroll: true }); } catch (e) {}
     }
     function close() {
       if (gate.hidden) return;
@@ -191,6 +191,14 @@
       e.preventDefault(); open();
     });
     if (no && out) try { new MutationObserver(function () { if (!out.hidden) no.textContent = 'Continuar no site'; }).observe(out, { attributes: true, attributeFilter: ['hidden'] }); } catch (e) {}
+    /* nome e e-mail antes de girar: o botão só acende com os dois preenchidos */
+    var U = window.OP_USER, fm = $('gate-f'), fn = $('g-nome'), fe = $('g-email'), bt = $('cod-go');
+    if (U && fm && fn && fe && bt) {
+      var u0 = U.get(); if (u0) { fn.value = u0.nome; fe.value = u0.email; }
+      var acende = function () { bt.classList.toggle('off', !(fn.value.trim().length >= 2 && U.EMAIL.test(fe.value.trim()))); };
+      fn.addEventListener('input', acende); fe.addEventListener('input', acende); acende();
+      fm.addEventListener('submit', function (e) { e.preventDefault(); bt.click(); });
+    }
     var tem = window.OP_CODIGO && window.OP_CODIGO.get();
     if (location.hash === '#codigo' || (!seen() && !tem)) open();
   })();
@@ -200,27 +208,34 @@
     var COD = window.OP_CODIGO, w = $('cod-wheel'), go = $('cod-go');
     if (!COD || !w || !go) return;
     var n = 12, A = Math.PI * 2 / n, got = false;
+    /* fatias da roda; o resultado é sorteado em codigo.js (CHANCES), não pelo tamanho das fatias */
+    var LAB = ['5%', '10%', '5%', '5%', '15%', '5%', '5%', '10%', '5%', '5%', '1 g', '5%'], ALVO = { '5': 0, '10': 1, '15': 4, B: 10 };
     var el = function (t, a, p) { var e = document.createElementNS(NS, t); for (var k in a) e.setAttribute(k, a[k]); (p || w).appendChild(e); return e; };
     el('circle', { r: 198, fill: '#111' });
     for (var i = 0; i < n; i++) {
       var a = i * A - A / 2, b = a + A, r0 = 44, r1 = 190;
-      el('path', { d: 'M' + Math.cos(a) * r1 + ' ' + Math.sin(a) * r1 + 'A' + r1 + ' ' + r1 + ' 0 0 1 ' + Math.cos(b) * r1 + ' ' + Math.sin(b) * r1 + 'L' + Math.cos(b) * r0 + ' ' + Math.sin(b) * r0 + 'A' + r0 + ' ' + r0 + ' 0 0 0 ' + Math.cos(a) * r0 + ' ' + Math.sin(a) * r0 + 'Z', fill: i % 2 ? '#ffffff' : '#f3efe4', stroke: '#111', 'stroke-width': .5 });
+      el('path', { d: 'M' + Math.cos(a) * r1 + ' ' + Math.sin(a) * r1 + 'A' + r1 + ' ' + r1 + ' 0 0 1 ' + Math.cos(b) * r1 + ' ' + Math.sin(b) * r1 + 'L' + Math.cos(b) * r0 + ' ' + Math.sin(b) * r0 + 'A' + r0 + ' ' + r0 + ' 0 0 0 ' + Math.cos(a) * r0 + ' ' + Math.sin(a) * r0 + 'Z', fill: LAB[i] === '1 g' ? '#d4a017' : LAB[i] !== '5%' ? '#f0d98a' : i % 2 ? '#ffffff' : '#f3efe4', stroke: '#111', 'stroke-width': .5 });
       el('circle', { cx: Math.cos(a) * 194, cy: Math.sin(a) * 194, r: 2, fill: '#f3efe4' });
       var g = el('g', { transform: 'rotate(' + (i * 30) + ')' });
-      var t = el('text', { x: 176, y: 9, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 800, 'font-size': 26, 'letter-spacing': '-.02em', fill: '#111' }, g); t.textContent = '5%';
-      var t2 = el('text', { x: 122, y: 4, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 700, 'font-size': 10, 'letter-spacing': '.14em', fill: '#111' }, g); t2.textContent = 'A MENOS';
+      var t = el('text', { x: 176, y: 9, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 800, 'font-size': 26, 'letter-spacing': '-.02em', fill: '#111' }, g); t.textContent = LAB[i];
+      var t2 = el('text', { x: 122, y: 4, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 700, 'font-size': 10, 'letter-spacing': '.14em', fill: '#111' }, g); t2.textContent = LAB[i] === '1 g' ? 'BARRA DE' : 'A MENOS';
     }
     el('circle', { r: 44, fill: '#d4a017', stroke: '#111', 'stroke-width': 3 });
     var hub = el('text', { y: 8, 'text-anchor': 'middle', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 800, 'font-size': 24, 'letter-spacing': '-.02em', fill: '#111' }); hub.textContent = 'OURO';
     var idle = LIVE ? G.to(w, { rotation: '+=360', duration: 40, ease: 'none', repeat: -1, transformOrigin: '50% 50%' }) : null;
     function reveal() {
-      got = true; COD.set(COD.GERAL);
-      $('h-cod').innerHTML = 'Seu código: <em>5% a menos</em>.';
-      $('cod-sub').textContent = 'Vale para a primeira barra de 1, 5 ou 10 g. Ele já está aplicado no preço desta página.';
+      got = true; var meu = COD.get() || COD.GERAL, ganho = COD.desconto(meu) || { pct: 5, barra: false };
+      var us = window.OP_USER && window.OP_USER.get(), fm = $('gate-f');
+      $('h-cod').innerHTML = 'Você ganhou <em>' + COD.rotulo(meu) + '</em>.';
+      var ob = $('cod-out').querySelector('b'), os = $('cod-out').querySelector('span'); if (ob) ob.textContent = meu;
+      if (os) os.textContent = ganho.barra ? 'uma barra de 1 g junto com a sua primeira compra, e 5% a menos nas barras de 1, 5 e 10 g' : ganho.pct + '% a menos nas barras de 1, 5 e 10 g, na primeira compra';
+      $('cod-sub').textContent = (us ? us.nome.split(' ')[0] + ', o código vale' : 'Vale') + ' para a primeira barra de 1, 5 ou 10 g. Ele já está aplicado no preço desta página e entra sozinho na reserva.';
+      if (fm) fm.hidden = true; go.classList.remove('off');
+      if (window.OP_USER) window.OP_USER.pinta();
       $('cod-out').hidden = false; go.textContent = 'Usar meu código';
       var sel = pk ? pk.getAttribute('data-sel') || '10' : '10';
-      go.href = '/comprar.html?barra=' + sel + '&codigo=' + COD.GERAL;
-      if ($('pick-go')) $('pick-go').href = '/comprar.html?barra=' + sel + '&codigo=' + COD.GERAL;
+      go.href = '/comprar.html?barra=' + sel + '&codigo=' + meu;
+      if ($('pick-go')) $('pick-go').href = '/comprar.html?barra=' + sel + '&codigo=' + meu;
       if (window.opPreco) window.opPreco();
     }
     function coins() {
@@ -238,10 +253,20 @@
     go.addEventListener('click', function (e) {
       if (got || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
       e.preventDefault();
-      if (!LIVE) { reveal(); return; }
+      var U = window.OP_USER, fn = $('g-nome'), fe = $('g-email'), er = $('gate-e');
+      if (U && fn && fe) {
+        var nm = fn.value.trim(), em = fe.value.trim(), okN = nm.length >= 2, okE = U.EMAIL.test(em);
+        fn.setAttribute('aria-invalid', String(!okN)); fe.setAttribute('aria-invalid', String(!okE));
+        if (!okN || !okE) { if (er) er.textContent = !okN ? 'Digite seu nome para girar.' : 'Digite um e-mail válido para girar.'; (okN ? fe : fn).focus(); return; }
+        if (er) er.textContent = ''; U.set(nm, em);
+      }
+      var tipo = COD.sortear(), eml = fe ? fe.value.trim() : '';
+      var fim = function () { COD.set(COD.premio(eml, tipo)); try { if (window.opMedir) window.opMedir('roda_premio', tipo); } catch (x) {} reveal(); };
+      if (!LIVE) { fim(); return; }
       got = true; if (idle) idle.kill();
       var now = G.getProperty(w, 'rotation') % 360; G.set(w, { rotation: now });
-      G.to(w, { rotation: now + 360 * 4 + (360 - now % 30) - 90, duration: 4.2, ease: 'power4.out', onComplete: function () { coins(); reveal(); } });
+      var para = ((-90 - ALVO[tipo] * 30 - now) % 360 + 360) % 360;
+      G.to(w, { rotation: now + 360 * 4 + para, duration: 4.6, ease: 'power4.out', onComplete: function () { coins(); fim(); } });
     });
   })();
 
