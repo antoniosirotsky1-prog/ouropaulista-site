@@ -203,7 +203,7 @@
     if (location.hash === '#codigo' || (!seen() && !tem)) open();
   })();
 
-  /* ---------- código de primeira compra: a roda sempre dá o mesmo código (não é sorteio) ---------- */
+  /* ---------- roleta: sorteio feito no banco, depois de nome e e-mail ---------- */
   (function () {
     var COD = window.OP_CODIGO, w = $('cod-wheel'), go = $('cod-go');
     if (!COD || !w || !go) return;
@@ -260,13 +260,17 @@
         if (!okN || !okE) { if (er) er.textContent = !okN ? 'Digite seu nome para girar.' : 'Digite um e-mail válido para girar.'; (okN ? fe : fn).focus(); return; }
         if (er) er.textContent = ''; U.set(nm, em);
       }
-      var tipo = COD.sortear(), eml = fe ? fe.value.trim() : '';
-      var fim = function () { COD.set(COD.premio(eml, tipo)); try { if (window.opMedir) window.opMedir('roda_premio', tipo); } catch (x) {} reveal(); };
-      if (!LIVE) { fim(); return; }
-      got = true; if (idle) idle.kill();
-      var now = G.getProperty(w, 'rotation') % 360; G.set(w, { rotation: now });
-      var para = ((-90 - ALVO[tipo] * 30 - now) % 360 + 360) % 360;
-      G.to(w, { rotation: now + 360 * 4 + para, duration: 4.6, ease: 'power4.out', onComplete: function () { coins(); fim(); } });
+      var nmv = fn ? fn.value.trim() : '', eml = fe ? fe.value.trim() : '';
+      got = true; go.classList.add('off');
+      /* o sorteio é feito no banco (backend/roleta.sql) e fica registrado com nome e e-mail */
+      COD.girar(nmv, eml).then(function (res) {
+        var fim = function () { COD.set(res.codigo); reveal(); };
+        if (!LIVE) { fim(); return; }
+        if (idle) idle.kill();
+        var now = G.getProperty(w, 'rotation') % 360; G.set(w, { rotation: now });
+        var para = ((-90 - ALVO[res.premio] * 30 - now) % 360 + 360) % 360;
+        G.to(w, { rotation: now + 360 * 4 + para, duration: 4.6, ease: 'power4.out', onComplete: function () { coins(); fim(); } });
+      });
     });
   })();
 
