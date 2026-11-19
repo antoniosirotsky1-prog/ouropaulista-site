@@ -131,6 +131,70 @@
     }
   }
 
+  /* ---------- passos: o sketch se desenha e vira aquarela quando entra na tela ---------- */
+  (function () {
+    var arts = document.querySelectorAll('.st-art');
+    if (!LIVE || !arts.length || !('IntersectionObserver' in window)) return;
+    [].forEach.call(arts, function (a) { G.set(a.querySelector('img'), { opacity: 0 }); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; io.unobserve(e.target);
+        var a = e.target, img = a.querySelector('img'), svg = a.querySelector('svg'), n = Number(a.getAttribute('data-art')) || 1;
+        var wait = innerWidth > 960 ? (n - 1) * .22 : 0;
+        img.loading = 'eager';
+        json('/assets/passos/ol-passo-' + n + '.json').then(function (d) {
+          var g = build(svg, d), pen = { x: -60 };
+          G.to(pen, { x: d.w + 120, duration: 1.5, delay: wait, ease: 'power1.inOut', onUpdate: function () { drawTo(g, pen.x, 110); } });
+          G.to(img, { opacity: 1, duration: .9, delay: wait + 1.05, ease: 'power1.out' });
+          G.to(svg, { opacity: 0, duration: .7, delay: wait + 1.5, ease: 'power1.out' });
+        }).catch(function () { G.set(img, { opacity: 1 }); });
+      });
+    }, { threshold: .3 });
+    [].forEach.call(arts, function (a) { io.observe(a); });
+  })();
+
+  /* ---------- roleta como banner de entrada: abre antes de tudo na primeira visita e pelo link "5% a menos" ---------- */
+  (function () {
+    var gate = $('codigo'), box = gate && gate.firstElementChild, no = $('gate-no'), out = $('cod-out');
+    if (!gate || !box) return;
+    var last = null, KEY = 'op_gate';
+    var seen = function () { try { return !!localStorage.getItem(KEY); } catch (e) { return false; } };
+    function open() {
+      if (!gate.hidden) return;
+      last = document.activeElement; gate.hidden = false; document.documentElement.classList.add('gate-on');
+      if (LIVE) { G.fromTo(gate, { opacity: 0 }, { opacity: 1, duration: .25, ease: 'power1.out' }); G.fromTo(box, { y: 28, scale: .97 }, { y: 0, scale: 1, duration: .45, ease: 'power3.out' }); }
+      var b = $('cod-go'); if (b) try { b.focus({ preventScroll: true }); } catch (e) {}
+    }
+    function close() {
+      if (gate.hidden) return;
+      gate.hidden = true; document.documentElement.classList.remove('gate-on');
+      try { localStorage.setItem(KEY, '1'); } catch (e) {}
+      if (location.hash === '#codigo' && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+      if (last && last.focus) try { last.focus({ preventScroll: true }); } catch (e) {}
+    }
+    gate.addEventListener('click', function (e) { if (e.target === gate) close(); });
+    $('gate-x').addEventListener('click', close);
+    if (no) no.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (gate.hidden) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+      var f = [].filter.call(gate.querySelectorAll('a[href],button,summary'), function (x) { return x.offsetParent !== null; });
+      if (!f.length) return;
+      var a = f[0], z = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); }
+      else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+    });
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href$="#codigo"]');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
+      e.preventDefault(); open();
+    });
+    if (no && out) try { new MutationObserver(function () { if (!out.hidden) no.textContent = 'Continuar no site'; }).observe(out, { attributes: true, attributeFilter: ['hidden'] }); } catch (e) {}
+    var tem = window.OP_CODIGO && window.OP_CODIGO.get();
+    if (location.hash === '#codigo' || (!seen() && !tem)) open();
+  })();
+
   /* ---------- código de primeira compra: a roda sempre dá o mesmo código (não é sorteio) ---------- */
   (function () {
     var COD = window.OP_CODIGO, w = $('cod-wheel'), go = $('cod-go');
