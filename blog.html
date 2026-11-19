@@ -390,15 +390,21 @@ p,li,dd{text-wrap:pretty}
 .page-hero h1{font-size:clamp(40px,5.6vw,72px)}
 .sec-head h2 em,.final h2 em,.page-hero h1 em{font-style:normal;color:var(--gold)}
 .site-footer{padding-bottom:104px}
-.buybar{position:fixed;left:0;right:0;bottom:0;z-index:48;background:#111;color:#fff;border-top:2px solid var(--gold)}
-.buybar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
-.buybar p{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 20px;min-width:0}
-.buybar b{font:800 20px/1.1 var(--d);text-transform:uppercase;letter-spacing:-0.01em;white-space:nowrap}
-.buybar em{font-style:normal;color:var(--gold)}
-.buybar span{font-size:14px;line-height:20px;color:rgba(255,255,255,.78)}
-.buybar .btn{flex:none;background:var(--gold);color:#111;min-height:44px;padding:8px 24px;white-space:nowrap}
+/* compra que acompanha a página: uma barra de ouro flutuante no canto, no lugar da faixa preta */
+.buybar{position:fixed;right:24px;bottom:24px;z-index:48;max-width:calc(100vw - 32px);filter:drop-shadow(0 10px 18px rgba(17,17,17,.28)) drop-shadow(0 2px 3px rgba(17,17,17,.22))}
+.buybar .wrap{position:relative;display:grid;gap:2px;width:auto;max-width:none;margin:0;min-height:0;padding:14px 26px 14px 24px;border-radius:9px;color:#111;background:linear-gradient(158deg,#f8e7ab 0%,#ecc95c 24%,#D4A017 58%,#b3850f 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -4px 0 rgba(84,58,0,.28),inset 2px 0 0 rgba(255,255,255,.22),inset -2px 0 0 rgba(84,58,0,.16)}
+.buybar .wrap::before{content:"";position:absolute;inset:6px;border:1px solid rgba(84,58,0,.32);border-radius:5px;box-shadow:0 1px 0 rgba(255,255,255,.35);pointer-events:none}
+.buybar p{display:grid;gap:1px;min-width:0}
+.buybar b{font:800 15px/18px var(--d);text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;color:#111;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+.buybar em{font-style:normal;color:#111}
+.buybar span{font-size:12px;line-height:16px;color:rgba(17,17,17,.78);font-variant-numeric:tabular-nums;white-space:nowrap}
+.buybar .btn{all:unset;cursor:pointer;margin-top:4px;font:800 13px/18px var(--d);letter-spacing:.08em;text-transform:uppercase;color:#111;white-space:nowrap}
+.buybar .btn::before{content:"";position:absolute;inset:0;border-radius:9px}
+.buybar .btn::after{content:" \2192"}
+.buybar .btn:focus-visible::before{outline:2px solid #111;outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.buybar{transition:transform 200ms var(--ease-out)}.buybar:hover{transform:translateY(-3px)}}
+@media (max-width:640px){.buybar{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}.buybar .wrap{padding:12px 20px 12px 18px}.buybar b{font-size:13px;line-height:16px}}
 @media (max-width:1100px){.nav{gap:18px}}
-@media (max-width:640px){.buybar b{font-size:16px}.buybar span{font-size:12px;line-height:16px}.buybar .btn{padding:8px 18px}}
 /* blog */
 .posts{border-bottom:1px solid var(--ink)}
 .post{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,6fr) minmax(0,3fr);gap:8px 48px;padding:32px 0;border-top:1px solid var(--ink);align-items:start}

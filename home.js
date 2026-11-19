@@ -339,7 +339,7 @@
       im.style.width = sz[i].w + 'px'; im.style.height = sz[i].hh + 'px'; im.style.left = offs[i] + 'px'; im.style.bottom = -sz[i].bl + 'px'; track.appendChild(im); return im;
     });
     [0, 1].forEach(function (j) { var l = document.createElement('div'); l.className = 'gl'; l.style[j ? 'left' : 'right'] = '100%'; track.appendChild(l); });
-    paintQuadro(ds, Math.min(W * .9, 1260) - (W > 960 ? 66 : 34), H * .7 - 84);
+    paintQuadro(ds, Math.min(W * .9, 1260) - (W > 960 ? 66 : 34), H * .6 - 84); /* o quadro acaba acima do lema, que fica no pé da tela */
     /* Raposo em linha: mesmo tamanho da figura real; desfaz de cima para baixo e vira o fio */
     var rg = build(rap, rd, true), bb = rap.getBBox();
     rap.setAttribute('viewBox', (bb.x - 4) + ' ' + (bb.y - 4) + ' ' + (bb.width + 8) + ' ' + (bb.height + 6));

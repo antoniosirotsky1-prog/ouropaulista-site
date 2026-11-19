@@ -513,7 +513,7 @@ svg.fio-walker{overflow:visible;opacity:0}
 .fio-legend p{max-width:620px;margin:0;text-wrap:pretty}
 .fio-legend::before{content:"";flex:none;width:40px;height:1px;margin-top:12px;background:var(--gold)}
 .fio.live .fio-skip{display:block;position:absolute;right:max(24px,calc((100vw - 1200px)/2 + 24px));bottom:4vh;z-index:4;font-size:13px;line-height:20px;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule)}
-.fio.live .fio-quadro{display:flex;position:absolute;left:50%;top:50.5%;margin:0;opacity:0;pointer-events:none;z-index:3}
+.fio.live .fio-quadro{display:flex;position:absolute;left:50%;top:45%;margin:0;opacity:0;pointer-events:none;z-index:3}
 .fio.live .fio-fin{position:absolute;left:16px;right:16px;bottom:4.2vh;margin:0;text-align:center;opacity:0;z-index:3}
 @media (min-width:961px){
   .fio-quadro{padding:30px 30px 26px;gap:14px;outline-offset:-10px}
@@ -536,15 +536,24 @@ svg.fio-walker{overflow:visible;opacity:0}
 .fio-head h2{font-weight:800;text-transform:uppercase;letter-spacing:-0.025em;line-height:1}
 .fio-fin{text-transform:uppercase;font-weight:800}
 .site-footer{padding-bottom:104px}
-.buybar{position:fixed;left:0;right:0;bottom:0;z-index:48;background:#111;color:#fff;border-top:2px solid var(--gold)}
-.buybar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px;padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))}
-.buybar p{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 20px;min-width:0}
-.buybar b{font:800 20px/1.1 var(--d);text-transform:uppercase;letter-spacing:-0.01em;white-space:nowrap}
-.buybar em{font-style:normal;color:var(--gold)}
-.buybar span{font-size:14px;line-height:20px;color:rgba(255,255,255,.78);font-variant-numeric:tabular-nums}
-.buybar .btn{flex:none;background:var(--gold);color:#111;min-height:44px;padding:8px 24px;white-space:nowrap}
-.js .buybar{transform:translateY(102%);visibility:hidden;transition:transform 300ms var(--ease-out),visibility 0s linear 300ms}
+/* compra que acompanha a página: uma barra de ouro flutuante no canto, no lugar da faixa preta */
+.buybar{position:fixed;right:24px;bottom:24px;z-index:48;max-width:calc(100vw - 32px);filter:drop-shadow(0 10px 18px rgba(17,17,17,.28)) drop-shadow(0 2px 3px rgba(17,17,17,.22))}
+.buybar .wrap{position:relative;display:grid;gap:2px;width:auto;max-width:none;margin:0;min-height:0;padding:14px 26px 14px 24px;border-radius:9px;color:#111;background:linear-gradient(158deg,#f8e7ab 0%,#ecc95c 24%,#D4A017 58%,#b3850f 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -4px 0 rgba(84,58,0,.28),inset 2px 0 0 rgba(255,255,255,.22),inset -2px 0 0 rgba(84,58,0,.16)}
+.buybar .wrap::before{content:"";position:absolute;inset:6px;border:1px solid rgba(84,58,0,.32);border-radius:5px;box-shadow:0 1px 0 rgba(255,255,255,.35);pointer-events:none}
+.buybar p{display:grid;gap:1px;min-width:0}
+.buybar b{font:800 15px/18px var(--d);text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;color:#111;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+.buybar em{font-style:normal;color:#111}
+.buybar span{font-size:12px;line-height:16px;color:rgba(17,17,17,.78);font-variant-numeric:tabular-nums;white-space:nowrap}
+.buybar .btn{all:unset;cursor:pointer;margin-top:4px;font:800 13px/18px var(--d);letter-spacing:.08em;text-transform:uppercase;color:#111;white-space:nowrap}
+.buybar .btn::before{content:"";position:absolute;inset:0;border-radius:9px}
+.buybar .btn::after{content:" \2192"}
+.buybar .btn:focus-visible::before{outline:2px solid #111;outline-offset:3px}
+@media (hover:hover) and (pointer:fine){.buybar{transition:transform 200ms var(--ease-out)}.buybar:hover{transform:translateY(-3px)}}
+@media (max-width:640px){.buybar{right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}.buybar .wrap{padding:12px 20px 12px 18px}.buybar b{font-size:13px;line-height:16px}}
+.js .buybar{transform:translateY(140%);visibility:hidden;transition:transform 300ms var(--ease-out),visibility 0s linear 300ms}
 .js .buybar.on{transform:none;visibility:visible;transition:transform 300ms var(--ease-out),visibility 0s}
+.js .buybar.on:hover{transform:translateY(-3px)}
+@media (prefers-reduced-motion:reduce){.js .buybar,.js .buybar.on{transition:none}}
 .fio.live .fio-legend,.fio.live .fio-skip{bottom:calc(3vh + 68px)}
 .fio.live .fio-fin{bottom:calc(3vh + 72px)}
 .fio.live .fio-track{bottom:calc(22vh + 40px)}
@@ -565,11 +574,7 @@ svg.fio-walker{overflow:visible;opacity:0}
   .steps .n{font-size:44px;grid-row:1/3}
   .steps h3{margin-top:0}
   .steps li p{grid-column:2}
-  .buybar b{font-size:16px}
-  .buybar span{font-size:12px;line-height:16px}
-  .buybar .btn{padding:8px 18px}
 }
-@media (prefers-reduced-motion:reduce){.js .buybar,.js .buybar.on{transition:none}}
 /* blog */
 .posts{border-bottom:1px solid var(--ink)}
 .post{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,6fr) minmax(0,3fr);gap:8px 48px;padding:32px 0;border-top:1px solid var(--ink);align-items:start}
@@ -629,16 +634,13 @@ html.gate-on{overflow:hidden}
 html.lenis,html.lenis body{height:auto}
 html.lenis{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
-/* chamada de rolagem: faixa clicável no pé da capa e no fim dos passos */
-.rola{display:flex;align-items:center;justify-content:center;gap:12px;min-height:64px;padding:0 24px;border-top:1px solid var(--rule);background:#111;color:#fff;text-decoration:none;font:800 15px/20px "Inter Tight",Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase}
-.rola svg{color:#D4A017;flex:none}
-.rola:hover,.rola:focus-visible{background:#D4A017;color:#111}.rola:hover svg,.rola:focus-visible svg{color:#111}
-.rola-in{margin-top:48px;background:none;color:var(--ink);border:1px solid #111}
-@media (prefers-reduced-motion:no-preference){.rola svg{animation:rola 1.6s cubic-bezier(.45,0,.55,1) infinite}}
-@keyframes rola{0%,100%{transform:translateY(-4px)}50%{transform:translateY(4px)}}
-.js .rola-top{position:fixed;left:0;right:0;bottom:0;z-index:49;border-top:2px solid var(--gold);transition:transform 300ms var(--ease-out),visibility 0s}
-.js.rolou .rola-top{transform:translateY(102%);visibility:hidden;transition:transform 300ms var(--ease-out),visibility 0s linear 300ms}
-@media (prefers-reduced-motion:reduce){.js .rola-top,.js.rolou .rola-top{transition:none}}
+/* chamada de rolagem: seta pequena que aparece por alguns segundos se a pessoa não rolou nem clicou em comprar */
+.seta{position:fixed;left:50%;bottom:28px;z-index:47;width:44px;height:44px;margin-left:-22px;display:grid;place-items:center;color:var(--ink);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 600ms var(--ease-out),visibility 0s linear 600ms}
+.seta.on{opacity:1;visibility:visible;pointer-events:auto;transition:opacity 600ms var(--ease-out),visibility 0s}
+.seta svg{color:var(--gold)}
+@media (prefers-reduced-motion:no-preference){.seta.on svg{animation:seta 1.8s cubic-bezier(.45,0,.55,1) infinite}}
+@keyframes seta{0%,100%{transform:translateY(-5px)}50%{transform:translateY(5px)}}
+@media (max-width:959px){.seta{bottom:88px}}
 </style>
 <script type="application/ld+json">
 {
@@ -902,7 +904,7 @@ html.lenis{scroll-behavior:auto!important}
     </div>
     <p class="hx-trust">Venda, nota fiscal e entrega por instituição autorizada pelo Banco Central. A Ouro Paulista não recebe dinheiro nem guarda ouro. <a href="/#codigo">Girar a roleta do desconto</a></p>
   </section>
-  <a class="rola rola-top" href="#como-comprar"><span>Como funciona</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg></a>
+  <a class="seta" id="seta" href="#como-comprar" aria-label="Ver como funciona"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg></a>
   <svg id="hx-trail" aria-hidden="true"><path id="hx-trailp"/></svg>
 
   <section class="section" id="como-comprar" aria-labelledby="h-como">
@@ -918,7 +920,6 @@ html.lenis{scroll-behavior:auto!important}
         <li data-rule><div class="st-art" data-art="4"><img src="/assets/passos/passo-4.webp" alt="" width="720" height="720" loading="lazy" decoding="async"><svg aria-hidden="true"></svg></div><span class="n">04</span><h3>Em casa</h3><p>A barra chega lacrada, com transporte segurado, no endereço do cadastro. Você confere o número do lacre com o certificado e a nota.</p></li>
       </ol>
       <p class="steps-go"><a class="btn btn-primary" href="/comprar.html">Começar a reserva</a><a class="link" href="#duvidas">Tirar uma dúvida antes</a></p>
-      <a class="rola rola-in" href="#fio"><span>De onde vem o nome</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg></a>
     </div>
   </section>
 
@@ -1087,7 +1088,22 @@ html.lenis{scroll-behavior:auto!important}
   }).catch(function(){});
 
   (function(){
-    var rl=function(){document.documentElement.classList.toggle('rolou',(window.scrollY||0)>24);};rl();addEventListener('scroll',rl,{passive:true});
+    /* seta de rolagem: entra depois de 5 s, fica 7 s e some; não entra se a pessoa já rolou, clicou em comprar ou está com a roleta aberta */
+    (function(){
+      var st=document.getElementById('seta');if(!st)return;
+      var fim=false,t=null,n=0;
+      var some=function(){fim=true;st.classList.remove('on');if(t)clearTimeout(t);};
+      var tenta=function(){
+        if(fim)return;
+        var g=document.getElementById('codigo');
+        if(g&&!g.hidden){if(++n<10)t=setTimeout(tenta,3000);return;}
+        if((window.scrollY||0)>24){some();return;}
+        st.classList.add('on');t=setTimeout(some,7000);
+      };
+      t=setTimeout(tenta,5000);
+      addEventListener('scroll',function(){if((window.scrollY||0)>24)some();},{passive:true});
+      document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('#pick-go,#pick a,.header-cta,#bb-go,#seta'))some();});
+    })();
     var bb=document.getElementById('buybar'),go=document.getElementById('pick-go'),bg=document.getElementById('bb-go'),bi=document.getElementById('bb-info'),pp=document.getElementById('pick-price');
     if(!bb||!go||!bg||!bi)return;
     var sync=function(){
@@ -1108,8 +1124,8 @@ html.lenis{scroll-behavior:auto!important}
 <script src="/assets/v/gsap.min.js" defer></script>
 <script src="/assets/v/ScrollTrigger.min.js" defer></script>
 <script src="/assets/v/lenis.min.js" defer></script>
-<script src="/codigo.js?v=19" defer></script>
-<script src="/home.js?v=19" defer></script>
+<script src="/codigo.js?v=20" defer></script>
+<script src="/home.js?v=20" defer></script>
 <script src="/blog.js" defer></script>
 <script src="/config.js" defer></script>
 <script src="/medir.js" defer></script>
