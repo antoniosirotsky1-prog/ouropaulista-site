@@ -20,7 +20,7 @@
     if (p.resumo) m.appendChild(el('p', 'post-r', p.resumo));
     a.appendChild(m);
     var s = el('p', 'post-s');
-    if (seguro(p.img)) { var i = el('img'); i.src = p.img; i.alt = ''; i.loading = 'lazy'; i.decoding = 'async'; s.appendChild(i); }
+    if (seguro(p.img)) { var i = el('img'); i.src = p.img; i.alt = ''; i.width = 720; i.height = 540; i.loading = 'lazy'; i.decoding = 'async'; s.appendChild(i); }
     if (seguro(p.url)) {
       var k = el('a', '', p.tipo === 'post' ? 'Ver a publicação' : 'Ler na fonte'); k.href = p.url;
       if (/^https:/.test(p.url)) { k.target = '_blank'; k.rel = 'noopener'; }
