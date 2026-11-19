@@ -2,7 +2,7 @@
 // Roda no GitHub Actions (.github/workflows/precos.yml). Sem dependências: Node 20+.
 //
 // Conta: paridade pública do ouro (onça em dólar × dólar em reais ÷ 31,10) × fator da barra × gramas.
-// As duas cotações vêm de fontes públicas. Nada aqui é lido de sistema de parceiro.
+// As duas cotações vêm de fontes públicas (o dólar tem três, em ordem de preferência). Nada aqui é lido de sistema de parceiro.
 // O fator de cada barra é o preço final sobre a paridade. A regra e a justificativa ficam no Drive do projeto.
 import { readFile, writeFile } from 'node:fs/promises';
 
@@ -21,10 +21,38 @@ function agoraSaoPaulo() {
   return d.toISOString().slice(0, 19) + '-03:00';
 }
 
-const ouro = Number((await json('https://api.gold-api.com/price/XAU')).price);
-const dolar = Number((await json('https://economia.awesomeapi.com.br/json/last/USD-BRL')).USDBRL.bid);
-if (!(ouro > 1000 && ouro < 15000)) throw new Error(`onça fora da faixa esperada: ${ouro}`);
-if (!(dolar > 3 && dolar < 12)) throw new Error(`dólar fora da faixa esperada: ${dolar}`);
+// Tenta as fontes na ordem e fica com a primeira que responde dentro da faixa esperada.
+async function primeira(nome, min, max, fontes) {
+  const falhas = [];
+  for (const [rotulo, ler] of fontes) {
+    try {
+      const v = Number(await ler());
+      if (v > min && v < max) { console.log(`${nome}: ${v} (${rotulo})`); return v; }
+      falhas.push(`${rotulo}: valor fora da faixa (${v})`);
+    } catch (e) { falhas.push(`${rotulo}: ${e.message}`); }
+  }
+  throw new Error(`${nome} sem fonte válida. ${falhas.join(' | ')}`);
+}
+
+function dataBCB(diasAtras) {
+  const d = new Date(Date.now() - 3 * 3600 * 1000 - diasAtras * 24 * 3600 * 1000);
+  return `${d.toISOString().slice(5, 7)}-${d.toISOString().slice(8, 10)}-${d.toISOString().slice(0, 4)}`;
+}
+
+const ouro = await primeira('onça em dólar', 1000, 15000, [
+  ['gold-api.com', async () => (await json('https://api.gold-api.com/price/XAU')).price],
+]);
+
+// Dólar: cotação ao vivo quando a fonte responde; senão o último boletim PTAX do Banco Central; senão referência diária.
+const dolar = await primeira('dólar em reais', 3, 12, [
+  ['awesomeapi', async () => (await json('https://economia.awesomeapi.com.br/json/last/USD-BRL')).USDBRL.bid],
+  ['PTAX do Banco Central', async () => {
+    const u = "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@m,dataInicial=@a,dataFinalCotacao=@b)"
+      + `?@m='USD'&@a='${dataBCB(7)}'&@b='${dataBCB(0)}'&$format=json&$orderby=dataHoraCotacao%20desc&$top=1`;
+    return (await json(u)).value[0].cotacaoVenda;
+  }],
+  ['open.er-api.com', async () => (await json('https://open.er-api.com/v6/latest/USD')).rates.BRL],
+]);
 
 const paridade = (ouro * dolar) / 31.1;
 const barras = {};
