@@ -57,7 +57,7 @@
     $('limit-note').hidden = st.barra * st.qtd < 15;
     var v = PRECOS && Number(PRECOS.barras[st.barra]);
     $('preco').hidden = !(v > 0);
-    if (v > 0) $('preco').textContent = 'Preço de referência: ' + BRL.format(v * st.qtd) + ' (' + PRECOS.quando + '). O valor final é confirmado antes do pagamento.';
+    if (v > 0) $('preco').textContent = 'Preço de referência: ' + BRL.format(v * st.qtd) + ' (' + PRECOS.quando + '). Frete à parte. O valor final é confirmado antes do pagamento.';
   }
   var PRECOS = null, BRL = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
   paintBarra();
