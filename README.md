@@ -17,6 +17,6 @@ O site só mostra preço se existir `/precos.json` na raiz, com menos de 36 hora
 
 - `barras`: preço final em reais de cada barra (chave = gramas), já com o acréscimo da Ouro Paulista. Aparece nos cartões da loja e no primeiro passo de `/comprar.html`, sempre como "preço de referência", com data e hora.
 - Quem gera: `tools/precos.mjs`, rodado pelo GitHub Actions (`.github/workflows/precos.yml`) três vezes por dia útil e uma vez no fim de semana. Também roda à mão em Actions → Preço de referência → Run workflow.
-- Conta: paridade pública do ouro (onça em dólar × dólar em reais ÷ 31,10) × fator da barra × gramas. As cotações vêm de fontes públicas (gold-api.com e AwesomeAPI).
+- Conta: paridade pública do ouro (onça em dólar × dólar em reais ÷ 31,10) × fator da barra × gramas. As cotações vêm de fontes públicas: onça em gold-api.com; dólar em AwesomeAPI e, se ela não responder, no último boletim PTAX do Banco Central e depois em open.er-api.com.
 - Nunca gravar neste repositório dado lido do sistema interno da instituição parceira: o repositório é público.
 - Se uma fonte falhar ou o preço variar mais de 8% de uma vez, o arquivo não é atualizado. Depois de 36 horas sem atualização o site volta a dizer que o preço é informado na reserva.
