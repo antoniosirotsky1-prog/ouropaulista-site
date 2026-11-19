@@ -23,6 +23,8 @@ Painel do Supabase → Table Editor → `cadastros`. Documentos em Storage → `
 
 A coluna `entrega` traz a forma de recebimento escolhida (`correios`, `portador`, `retirada` ou `combinar`), o frete estimado em reais e o valor de referência do pedido naquele momento. É estimativa: o frete que vale é o confirmado antes do pagamento.
 
+O campo `origem` traz também `codigo` (código de primeira compra ou de indicação usado na reserva) e `indicacao` (o código de indicação gerado para quem reservou). Para saber quem indicou um cliente, procurar a linha cujo `origem->>indicacao` é igual ao `origem->>codigo` dele. Regras em `/codigo.js` e no README.
+
 ## Segurança
 
 - O público só insere. Não há leitura, alteração nem exclusão pela chave pública.

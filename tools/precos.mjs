@@ -59,6 +59,11 @@ const paridade = (ouro * dolar) / 31.1;
 const barras = {};
 for (const [g, fator] of Object.entries(FATOR)) barras[g] = Math.ceil(paridade * fator * Number(g));
 
+// Barras de até 10 g: acréscimo de 5% no preço de tabela. Com código de primeira compra (ver /codigo.js) vale o preço sem o acréscimo.
+const ACRESCIMO_SEM_CODIGO = 1.05;
+const com_codigo = {};
+for (const g of ['1', '5', '10']) { com_codigo[g] = barras[g]; barras[g] = Math.ceil(barras[g] * ACRESCIMO_SEM_CODIGO); }
+
 let anterior = null;
 try { anterior = JSON.parse(await readFile(ARQUIVO, 'utf8')); } catch {}
 const recente = anterior && Date.now() - new Date(anterior.atualizado_em).getTime() < 4 * 24 * 3600 * 1000;
@@ -67,5 +72,5 @@ if (recente && anterior.barras && anterior.barras['10'] > 0) {
   if (salto > SALTO_MAXIMO) throw new Error(`variação de ${(salto * 100).toFixed(1)}% contra o último preço: não publicado`);
 }
 
-await writeFile(ARQUIVO, JSON.stringify({ atualizado_em: agoraSaoPaulo(), barras }) + '\n');
-console.log('precos.json atualizado', barras);
+await writeFile(ARQUIVO, JSON.stringify({ atualizado_em: agoraSaoPaulo(), barras, com_codigo }) + '\n');
+console.log('precos.json atualizado', barras, com_codigo);
