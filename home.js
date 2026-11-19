@@ -218,7 +218,7 @@
       el('circle', { cx: Math.cos(a) * 194, cy: Math.sin(a) * 194, r: 2, fill: '#f3efe4' });
       var g = el('g', { transform: 'rotate(' + (i * 30) + ')' });
       var t = el('text', { x: 176, y: 9, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 800, 'font-size': 26, 'letter-spacing': '-.02em', fill: '#111' }, g); t.textContent = LAB[i];
-      var t2 = el('text', { x: 122, y: 4, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 700, 'font-size': 10, 'letter-spacing': '.14em', fill: '#111' }, g); t2.textContent = LAB[i] === '1 g' ? 'BARRA DE' : 'A MENOS';
+      var t2 = el('text', { x: 122, y: 4, 'text-anchor': 'end', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 700, 'font-size': 10, 'letter-spacing': '.14em', fill: '#111' }, g); t2.textContent = LAB[i] === '1 g' ? 'BARRA DE' : 'DESCONTO';
     }
     el('circle', { r: 44, fill: '#d4a017', stroke: '#111', 'stroke-width': 3 });
     var hub = el('text', { y: 8, 'text-anchor': 'middle', 'font-family': 'Inter Tight, sans-serif', 'font-weight': 800, 'font-size': 24, 'letter-spacing': '-.02em', fill: '#111' }); hub.textContent = 'OURO';
@@ -228,7 +228,7 @@
       var us = window.OP_USER && window.OP_USER.get(), fm = $('gate-f');
       $('h-cod').innerHTML = 'Você ganhou <em>' + COD.rotulo(meu) + '</em>.';
       var ob = $('cod-out').querySelector('b'), os = $('cod-out').querySelector('span'); if (ob) ob.textContent = meu;
-      if (os) os.textContent = ganho.barra ? 'uma barra de 1 g junto com a sua primeira compra, e 5% a menos nas barras de 1, 5 e 10 g' : ganho.pct + '% a menos nas barras de 1, 5 e 10 g, na primeira compra';
+      if (os) os.textContent = ganho.barra ? 'uma barra de 1 g junto com a sua primeira compra, e 5% de desconto nas barras de 1, 5 e 10 g' : ganho.pct + '% de desconto nas barras de 1, 5 e 10 g, na primeira compra';
       $('cod-sub').textContent = (us ? us.nome.split(' ')[0] + ', o código vale' : 'Vale') + ' para a primeira barra de 1, 5 ou 10 g. Ele já está aplicado no preço desta página e entra sozinho na reserva.';
       if (fm) fm.hidden = true; go.classList.remove('off');
       if (window.OP_USER) window.OP_USER.pinta();
@@ -279,17 +279,17 @@
   if (!fio) return;
   var PANELS = ['ouro', 'bandeira', 'igreja', '1822', '1867', 'r32', 'predio', 'sky', '2026'];
   /* rótulo, ano, título e legenda de cada época */
-  var INTRO = ['Raposo Tavares', '1628', 'O ouro sempre saiu de São Paulo a pé.', 'Raposo Tavares deixa a vila de São Paulo de Piratininga a pé, rumo ao sertão. É o bandeirante que dá rosto à Ouro Paulista.'];
+  var INTRO = ['Raposo Tavares', '1628', 'Quatro séculos de ouro paulista.', 'Raposo Tavares sai a pé da vila de São Paulo, rumo ao sertão. É dele o rosto da Ouro Paulista.'];
   var CH = [
-    ['Sertão de São Paulo', '1693', 'Quem achou o ouro foram os paulistas.', 'Bandeiras saídas de São Paulo encontram ouro no interior. O nome Minas Gerais só viria em 1720.'],
-    ['O caminho do ouro', '1709', 'São Paulo e Minas do Ouro.', 'A Coroa cria a Capitania de São Paulo e Minas do Ouro. As minas e São Paulo eram uma coisa só.'],
-    ['Barroco paulista', '1750', 'O ouro virou altar.', 'O ouro vira talha dourada nos altares das igrejas paulistas.'],
-    ['Independência', '1822', 'O país nasceu em São Paulo.', 'O grito da Independência é dado às margens do Ipiranga.'],
-    ['Ouro verde', '1867', 'O ouro mudou de cor.', 'O café desce a serra de trem e enriquece São Paulo. O apelido dele diz tudo: ouro verde.'],
-    ['Revolução Constitucionalista', '1932', 'Ouro para o bem de São Paulo.', 'Os paulistas doam alianças e joias à campanha. Quem doava recebia um anel com a frase “Dei ouro para o bem de São Paulo”.'],
-    ['O prédio do ouro', '1939', 'O ouro que sobrou virou prédio.', 'Com o ouro que restou da campanha ergueu-se, no centro, o Edifício Ouro para o Bem de São Paulo, entregue à Santa Casa. É dessa frase que vem o nosso lema.'],
-    ['São Paulo', 'Hoje', 'A cidade que o ouro ajudou a erguer.', 'A vila de onde saíam as bandeiras é hoje a maior cidade do país.'],
-    ['Na sua casa', '2026', 'Ouro de São Paulo para o seu bem.', 'A Ouro Paulista inverte a frase de 1932: agora é o ouro que vai até você, em barra, no seu nome.']
+    ['Sertão', '1693', 'Paulistas acham o ouro.', 'Bandeiras saídas de São Paulo encontram ouro no sertão. A região só ganharia o nome de Minas Gerais em 1720.'],
+    ['O caminho do ouro', '1709', 'São Paulo e as minas, uma só terra.', 'A Coroa cria a Capitania de São Paulo e Minas do Ouro. O ouro e São Paulo aparecem juntos no mapa.'],
+    ['Barroco paulista', '1750', 'O ouro sobe ao altar.', 'Nas igrejas paulistas, a madeira entalhada é coberta de folha de ouro. Riqueza feita para durar séculos.'],
+    ['Independência', '1822', 'O grito às margens do Ipiranga.', 'Em 7 de setembro, a Independência do Brasil é proclamada em solo paulista.'],
+    ['Ouro verde', '1867', 'O ouro muda de cor.', 'O trem liga o interior ao porto de Santos e o café enriquece São Paulo. O apelido dele: ouro verde.'],
+    ['Revolução Constitucionalista', '1932', 'Ouro para o bem de São Paulo.', 'Famílias paulistas doam alianças e joias à campanha. Em troca, recebem um anel simples com a frase “Dei ouro para o bem de São Paulo”.'],
+    ['O prédio do ouro', '1939', 'O que sobrou virou prédio.', 'O ouro que restou da campanha ergue, no centro, o Edifício Ouro para o Bem de São Paulo, entregue à Santa Casa. Dessa frase nasce o nosso lema.'],
+    ['São Paulo', 'Hoje', 'A vila virou a maior cidade do país.', 'O ponto de partida das bandeiras é hoje o centro financeiro do Brasil.'],
+    ['Na sua casa', '2026', 'Agora o ouro vai até você.', 'Em 1932, o paulista deu o ouro. Em 2026, ele recebe: em barra, lacrada, no seu nome.']
   ];
   var data = null, trig = null, lenis = null, lastW = 0;
   var track = $('fio-track'), quadro = $('fio-quadro'), walker = $('fio-walker'), rap = $('fio-rap');

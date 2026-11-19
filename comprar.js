@@ -86,7 +86,7 @@
       var digitado = $('codigo').value.trim(), ok = !!codigo(), pequeno = st.barra <= 10;
       $('codigo-nota').textContent = !digitado ? (pequeno ? 'Com código, as barras de 1, 5 e 10 g saem mais baratas na primeira compra.' : '')
         : !ok ? 'Código não reconhecido. Confira as letras e os números.'
-        : pequeno ? 'Código aplicado: ' + COD.desconto(codigo()).pct + '% a menos nesta barra' + (COD.desconto(codigo()).barra ? ' e uma barra de 1 g junto com esta compra' : '') + '. Vale para a primeira compra e é conferido antes do pagamento.'
+        : pequeno ? 'Código aplicado: ' + COD.desconto(codigo()).pct + '% de desconto nesta barra' + (COD.desconto(codigo()).barra ? ' e uma barra de 1 g junto com esta compra' : '') + '. Vale para a primeira compra e é conferido antes do pagamento.'
         : 'Código anotado. O desconto vale para barras de 1, 5 e 10 g.' + (COD.desconto(codigo()).barra ? ' A barra de 1 g vem junto com esta compra.' : '');
     }
     if (v > 0) $('preco').textContent = 'Preço de referência: ' + BRL.format(v * st.qtd) + ' (' + PRECOS.quando + '). O frete é calculado pelo CEP, no passo de entrega. O valor final é confirmado antes do pagamento.';
