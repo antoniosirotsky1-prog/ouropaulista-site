@@ -20,7 +20,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon_32.png">
 <link rel="apple-touch-icon" href="/favicon_180.png">
 <link rel="preload" href="/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" imagesrcset="/assets/hero-640.webp 640w, /barra-10g-granito.webp 1100w" imagesizes="(max-width:1100px) 100vw, 42vw" fetchpriority="high">
+<link rel="preload" as="image" imagesrcset="/assets/hero-640.webp 640w, /barra-10g-granito.webp 1200w" imagesizes="(max-width:1100px) 100vw, 46vw" fetchpriority="high">
 <script>document.documentElement.className='js'</script>
 <style>
 @font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-latin-wght-normal.woff2) format("woff2")}
@@ -121,6 +121,16 @@ p,li,dd{text-wrap:pretty}
 .weights a:active{transform:scale(0.97)}
 @media (hover:hover) and (pointer:fine){.weights a:hover{border-color:var(--ink)}}
 .plate-cap{margin-top:12px;font-size:12px;line-height:16px;color:var(--ink-2)}
+.hero figure{margin:0}
+.hero .weights{margin-top:32px}
+@media (min-width:1101px){
+  .hero{padding:0;border-bottom:0}
+  .hero .wrap{max-width:none;padding:0;grid-template-columns:minmax(0,1fr) minmax(0,46vw);gap:0;align-items:stretch}
+  .hero-copy{align-self:center;padding:64px 64px 64px max(24px,calc((100vw - 1200px)/2 + 24px))}
+  .hero figure{position:relative;min-height:min(760px,calc(100vh - 73px));min-height:min(760px,calc(100svh - 73px))}
+  .hero .plate{position:absolute;inset:0;aspect-ratio:auto;max-height:none;height:100%}
+  .hero .plate-cap{position:absolute;left:24px;right:24px;bottom:16px;margin:0;color:rgba(255,255,255,.72)}
+}
 
 /* faixa de ensaio */
 .assay{position:relative;border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
@@ -297,7 +307,7 @@ p,li,dd{text-wrap:pretty}
   .hero h1 .w{animation:word 500ms var(--ease-out) both;animation-delay:calc(var(--i) * 40ms)}
   .hero .sub{animation:fade 300ms var(--ease-out) 200ms both}
   .js .plate{clip-path:inset(100% 0 0 0)}
-  .js .plate.ready{clip-path:inset(0);transition:clip-path 900ms var(--ease-in-out)}
+  .js .plate.ready{clip-path:inset(0);transition:clip-path 600ms var(--ease-in-out)}
   .js [data-words] .w{display:inline-block;clip-path:inset(0 -0.1em 100% -0.1em);transition:clip-path 400ms var(--ease-out);transition-delay:calc(var(--i,0) * 30ms)}
   .js [data-words].in .w{clip-path:inset(-0.2em -0.1em)}
   .js [data-fade]{opacity:0;transition:opacity 300ms var(--ease-out)}
@@ -629,15 +639,15 @@ p,li,dd{text-wrap:pretty}
           <a class="link" href="#barras">Ver as barras<svg class="i" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
         </div>
         <p class="proofline"><svg class="i" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6L12 3Z"/><path d="M8.8 12.2l2.2 2.2 4.2-4.4"/></svg><span>Venda, nota fiscal e entrega por instituição autorizada pelo Banco Central.</span></p>
+        <nav class="weights" aria-label="Pesos disponíveis"><a href="#barra-1g">1 g</a><a href="#barra-5g">5 g</a><a href="#barra-10g">10 g</a><a href="#barra-25g">25 g</a><a href="#barra-50g">50 g</a><a href="#barra-100g">100 g</a></nav>
       </div>
       <figure>
         <div class="plate">
-          <img src="/barra-10g-granito.webp" srcset="/assets/hero-640.webp 640w, /barra-10g-granito.webp 1100w" sizes="(max-width:1100px) 100vw, 42vw" alt="Barra de ouro de 10 g Ouro Paulista, com o brasão do bandeirante gravado e a inscrição 10 g ouro 999, sobre granito preto" width="1100" height="1366" fetchpriority="high">
+          <img src="/barra-10g-granito.webp" srcset="/assets/hero-640.webp 640w, /barra-10g-granito.webp 1200w" sizes="(max-width:1100px) 100vw, 46vw" alt="Barra de ouro de 10 g Ouro Paulista, com o brasão do bandeirante gravado e a inscrição AU 999, 10 g, sobre granito preto" width="1200" height="1490" fetchpriority="high">
           <video class="hero-video" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"><source src="/assets/hero.webm" type="video/webm"><source src="/assets/hero.mp4" type="video/mp4"></video>
           <script>(function(){var s=document.currentScript,p=s.parentNode,i=p.querySelector('img'),go=function(){p.classList.add('ready')};if(!i||i.complete)go();else{i.addEventListener('load',go);i.addEventListener('error',go)}setTimeout(go,2500)})()</script>
         </div>
         <figcaption class="plate-cap">Barra de 10 g com o brasão Ouro Paulista. Imagem ilustrativa.</figcaption>
-        <nav class="weights" aria-label="Pesos disponíveis"><a href="#barra-1g">1 g</a><a href="#barra-5g">5 g</a><a href="#barra-10g">10 g</a><a href="#barra-25g">25 g</a><a href="#barra-50g">50 g</a><a href="#barra-100g">100 g</a></nav>
       </figure>
     </div>
   </section>
@@ -710,7 +720,7 @@ p,li,dd{text-wrap:pretty}
         </article>
       </div>
       <div class="role">
-        <div class="photo" data-fade><img src="/brasao-macro.webp" alt="Brasão da Ouro Paulista, retrato do bandeirante em moldura, gravado no ouro" width="1280" height="720" loading="lazy"></div>
+        <div class="photo" data-fade><img src="/brasao-macro.webp" alt="Brasão da Ouro Paulista, retrato do bandeirante em moldura, gravado no ouro" width="1024" height="1271" loading="lazy"></div>
         <div data-fade>
           <p class="label">O papel do ouro</p>
           <h3>Uma reserva de proteção que existe fora da tela.</h3>
@@ -910,5 +920,7 @@ p,li,dd{text-wrap:pretty}
     document.querySelectorAll('[data-sem-preco]').forEach(function(e){e.hidden=true});
   }).catch(function(){});
 </script>
+<script src="/config.js" defer></script>
+<script src="/medir.js" defer></script>
 </body>
 </html>
