@@ -46,6 +46,7 @@ const ouro = await primeira('onça em dólar', 1000, 15000, [
 // Dólar: cotação ao vivo quando a fonte responde; senão o último boletim PTAX do Banco Central; senão referência diária.
 const dolar = await primeira('dólar em reais', 3, 12, [
   ['awesomeapi', async () => (await json('https://economia.awesomeapi.com.br/json/last/USD-BRL')).USDBRL.bid],
+  ['dolarapi.com', async () => (await json('https://br.dolarapi.com/v1/cotacoes/usd')).venda],
   ['PTAX do Banco Central', async () => {
     const u = "https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoMoedaPeriodo(moeda=@m,dataInicial=@a,dataFinalCotacao=@b)"
       + `?@m='USD'&@a='${dataBCB(7)}'&@b='${dataBCB(0)}'&$format=json&$orderby=dataHoraCotacao%20desc&$top=1`;
