@@ -293,6 +293,8 @@
     enviarOnline(id).then(function () { finish(id); }).catch(function () {
       sending = false; btn.disabled = false;
       status('Não foi possível enviar agora. Verifique a conexão e tente de novo. Nada foi cobrado.');
+      $('wa-alt').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(textoWhats());
+      $('alt').hidden = false;
     });
   });
 

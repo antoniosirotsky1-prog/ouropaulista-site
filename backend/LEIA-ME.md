@@ -2,15 +2,20 @@
 
 O fluxo de reserva (`/comprar.html`) grava o pedido e os documentos do cliente num projeto Supabase próprio.
 
-## Ligar (uma vez)
+## Estado
 
-1. Criar um projeto novo no Supabase, só para a Ouro Paulista, região São Paulo. Não reutilizar projeto de outro negócio.
-2. Ativar a verificação em duas etapas na conta do Supabase.
-3. No SQL Editor, colar e rodar `backend/supabase.sql`.
-4. Em Project Settings → API, copiar a URL do projeto e a chave pública (anon / publishable).
-5. Preencher `supabaseUrl` e `supabaseKey` em `/config.js`. A chave `service_role` nunca entra no site nem no repositório.
+Ligado em 19/11/2026. Projeto `ouro-paulista-cadastros`, organização "Ouro Paulista" no Supabase (separada de qualquer outro negócio), região São Paulo, plano gratuito. A URL e a chave pública estão em `/config.js`.
 
-Enquanto `config.js` estiver vazio, o fluxo não grava nada: envia o resumo pelo WhatsApp do cliente e pede os documentos na conversa.
+- No plano gratuito o projeto é pausado depois de cerca de uma semana sem uso e não tem backup automático. Se o envio falhar, a página oferece mandar o pedido pelo WhatsApp. Antes de anunciar com volume, passar para o plano pago.
+- Ativar a verificação em duas etapas na conta que acessa o painel.
+- A chave `service_role` / `sb_secret` nunca entra no site nem no repositório.
+
+## Refazer do zero
+
+1. Criar um projeto no Supabase só para a Ouro Paulista, região São Paulo, com "Grant API access to new tables automatically" desligado.
+2. No SQL Editor, colar e rodar `backend/supabase.sql`.
+3. Em Project Settings → API Keys, copiar a URL do projeto e a chave pública (publishable).
+4. Preencher `supabaseUrl` e `supabaseKey` em `/config.js`. Com os dois vazios, o fluxo não grava nada: envia o resumo pelo WhatsApp do cliente e pede os documentos na conversa.
 
 ## Ver os cadastros
 
